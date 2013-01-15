@@ -6,11 +6,11 @@
  */
 function basey_styles() {
 	// register default CSS file (location /css/style.css of current theme)
-	if (is_child_theme() && file_exists(get_stylesheet_directory() . '/css/foundation.css')) {
-		$foundation_css = get_stylesheet_directory_uri() . '/css/foundation.css';
+	if (is_child_theme() && file_exists(get_stylesheet_directory() . '/css/app.css')) {
+		$foundation_css = get_stylesheet_directory_uri() . '/css/app.css';
 	}
 	else {
-		$foundation_css = get_template_directory_uri() . '/css/foundation.min.css';
+		$foundation_css = get_template_directory_uri() . '/css/app.css';
 	}
 	wp_enqueue_style('basey-foundation', $foundation_css, false, BASEY_VER, 'all');
 }
@@ -46,21 +46,25 @@ add_action('template_redirect','basey_scripts_header', 8);
 function basey_scripts() {
 	wp_enqueue_script('jquery');
 	wp_enqueue_script('basey-plugins', get_template_directory_uri() . '/js/plugins.js', array('jquery'), BASEY_VER, true);
+	wp_enqueue_script('jquery-cookie', get_template_directory_uri() . '/js/jquery.cookie.js', array('jquery'), BASEY_VER, true);
+	wp_enqueue_script('jquery-move', get_template_directory_uri() . '/js/jquery.event.move.js', array('jquery'), BASEY_VER, true);
+	wp_enqueue_script('jquery-swipe', get_template_directory_uri() . '/js/jquery.event.swipe.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-accordion', get_template_directory_uri() . '/js/jquery.foundation.accordion.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-alerts', get_template_directory_uri() . '/js/jquery.foundation.alerts.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-buttons', get_template_directory_uri() . '/js/jquery.foundation.buttons.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-clearing', get_template_directory_uri() . '/js/jquery.foundation.clearing.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-forms', get_template_directory_uri() . '/js/jquery.foundation.forms.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-joyride', get_template_directory_uri() . '/js/jquery.foundation.joyride.js', array('jquery'), BASEY_VER, true);
+	//wp_enqueue_script('foundation-magellan', get_template_directory_uri() . '/js/jquery.foundation.magellan.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-mediaquerytoggle', get_template_directory_uri() . '/js/jquery.foundation.mediaQueryToggle.js', array('jquery'), BASEY_VER, true);
-	wp_enqueue_script('foundation-magellan', get_template_directory_uri() . '/js/jquery.foundation.magellan.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-navigation', get_template_directory_uri() . '/js/jquery.foundation.navigation.js', array('jquery'), BASEY_VER, true);
+	wp_enqueue_script('foundation-orbit', get_template_directory_uri() . '/js/jquery.foundation.orbit.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-placeholder', get_template_directory_uri() . '/js/jquery.placeholder.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-reveal', get_template_directory_uri() . '/js/jquery.foundation.reveal.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-tabs', get_template_directory_uri() . '/js/jquery.foundation.tabs.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-tooltips', get_template_directory_uri() . '/js/jquery.foundation.tooltips.js', array('jquery'), BASEY_VER, true);
-	wp_enqueue_script('foundation-offcanvas', get_template_directory_uri() . '/js/jquery.offcanvas.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-topbar', get_template_directory_uri() . '/js/jquery.foundation.topbar.js', array('jquery'), BASEY_VER, true);
+	wp_enqueue_script('foundation-offcanvas', get_template_directory_uri() . '/js/jquery.offcanvas.js', array('jquery'), BASEY_VER, true);
 
 	wp_enqueue_script('foundation-app', get_template_directory_uri() . '/js/app.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('basey-scripts', get_template_directory_uri() . '/js/scripts.js', array('jquery'), BASEY_VER, true);

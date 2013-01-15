@@ -1,5 +1,5 @@
 /*
- * jQuery Foundation Tooltips 2.0.1
+ * jQuery Foundation Tooltips 2.0.2
  * http://foundation.zurb.com
  * Copyright 2012, ZURB
  * Free to use under the MIT license.
@@ -10,10 +10,11 @@
 
 ;(function ($, window, undefined) {
   'use strict';
-
+  
   var settings = {
       bodyHeight : 0,
       selector : '.has-tip',
+      additionalInheritableClasses : [],
       tooltipClass : '.tooltip',
       tipTemplate : function (selector, content) {
         return '<span data-selector="' + selector + '" class="' + settings.tooltipClass.substring(1) + '">' + content + '<span class="nub"></span></span>';
@@ -55,13 +56,13 @@
 
         });
       },
-      showOrCreateTip : function ($target) {
+      showOrCreateTip : function ($target, content) {
         var $tip = methods.getTip($target);
 
         if ($tip && $tip.length > 0) {
           methods.show($target);
         } else {
-          methods.create($target);
+          methods.create($target, content);
         }
       },
       getTip : function ($target) {
@@ -83,8 +84,9 @@
         }
         return (id) ? id : dataSelector;
       },
-      create : function ($target) {
-        var $tip = $(settings.tipTemplate(methods.selector($target), $('<div>').html($target.attr('title')).html())),
+      create : function ($target, content) {
+        var $tip = $(settings.tipTemplate(methods.selector($target),
+          $('<div>').html(content ? content : $target.attr('title')).html())),
           classes = methods.inheritable_classes($target);
 
         $tip.addClass(classes).appendTo('body');
@@ -110,7 +112,7 @@
             'bottom' : bottom,
             'left' : left,
             'right' : right,
-            'width' : (width) ? width : 'auto'
+            'max-width' : (width) ? width : 'auto'
           }).end();
         };
 
@@ -139,19 +141,27 @@
             objPos(tip, (target.offset().top + (target.outerHeight() / 2) - nubHeight), 'auto', 'auto', (target.offset().left + target.outerWidth() + 10), width)
               .removeClass('tip-override');
             objPos(nub, (tip.outerHeight() / 2) - (nubHeight / 2), 'auto', 'auto', -nubHeight);
+          } else if (classes && classes.indexOf('tip-centered-top') > -1) {
+            objPos(tip, (target.offset().top - tip.outerHeight() - nubHeight), 'auto', 'auto', (target.offset().left + ((target.outerWidth() - tip.outerWidth()) / 2) ), width)
+              .removeClass('tip-override');
+            objPos(nub, 'auto', ((tip.outerWidth() / 2) -(nubHeight / 2)), -nubHeight, 'auto');
+          } else if (classes && classes.indexOf('tip-centered-bottom') > -1) {
+            objPos(tip, (target.offset().top + target.outerHeight() + 10), 'auto', 'auto', (target.offset().left + ((target.outerWidth() - tip.outerWidth()) / 2) ), width)
+              .removeClass('tip-override');
+            objPos(nub, -nubHeight, ((tip.outerWidth() / 2) -(nubHeight / 2)), 'auto', 'auto');
           }
         }
         tip.css('visibility', 'visible').hide();
       },
       inheritable_classes : function (target) {
-        var inheritables = ['tip-top', 'tip-left', 'tip-bottom', 'tip-right', 'noradius'],
+        var inheritables = ['tip-top', 'tip-left', 'tip-bottom', 'tip-right', 'tip-centered-top', 'tip-centered-bottom', 'noradius'].concat(settings.additionalInheritableClasses),
           classes = target.attr('class'),
           filtered = classes ? $.map(classes.split(' '), function (el, i) {
               if ($.inArray(el, inheritables) !== -1) {
                 return el;
               }
           }).join(' ') : '';
-
+          
         return $.trim(filtered);
       },
       show : function ($target) {
