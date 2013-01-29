@@ -55,7 +55,7 @@ function basey_scripts() {
 	wp_enqueue_script('foundation-clearing', get_template_directory_uri() . '/js/jquery.foundation.clearing.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-forms', get_template_directory_uri() . '/js/jquery.foundation.forms.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-joyride', get_template_directory_uri() . '/js/jquery.foundation.joyride.js', array('jquery'), BASEY_VER, true);
-	//wp_enqueue_script('foundation-magellan', get_template_directory_uri() . '/js/jquery.foundation.magellan.js', array('jquery'), BASEY_VER, true);
+	wp_enqueue_script('foundation-magellan', get_template_directory_uri() . '/js/jquery.foundation.magellan.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-mediaquerytoggle', get_template_directory_uri() . '/js/jquery.foundation.mediaQueryToggle.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-navigation', get_template_directory_uri() . '/js/jquery.foundation.navigation.js', array('jquery'), BASEY_VER, true);
 	wp_enqueue_script('foundation-orbit', get_template_directory_uri() . '/js/jquery.foundation.orbit.js', array('jquery'), BASEY_VER, true);
