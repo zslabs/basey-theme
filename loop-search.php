@@ -2,8 +2,8 @@
 
 do_action('basey_search_header_before');
 
-echo apply_filters('basey_page_title_search', sprintf(__('<h1>Search Results</h1>','basey')));
-echo apply_filters('basey_search_query_title', sprintf(__('<h3>Search Results for %s</h3>','basey'),get_search_query()));
+echo '<h1>' . apply_filters('basey_page_title_search', sprintf(__('Search Results','basey'))) . '</h1>';
+echo '<h3>' . apply_filters('basey_search_query_title', sprintf(__('Search Results for %s','basey'),get_search_query())) . '</h3>';
 
 $results = array();
 
@@ -32,7 +32,7 @@ if ( have_posts() ) {
 
 	}
 
-	// DEBUG: Prints out current post type information
+	// DEBUG: Prints out current search results
 	//print_r($results);
 
 	// generates anchor links for each term/post type found
@@ -78,6 +78,7 @@ do_action('basey_search_header_after');
 				$term_object = get_term_by('id', $term_single, $tax_name);
 
 				switch ($term['tax_name']) {
+
 					case has_action( "basey_taxonomy_search_teaser_{$tax_name}" ) :
 						do_action( "basey_taxonomy_search_teaser_{$tax_name}",$term_object, $term_single );
 					break;
@@ -126,13 +127,10 @@ do_action('basey_search_header_after');
 
 					case 'post':
 						echo basey_teaser_post($search = true);
-
 					break;
-
 
 					default:
 						echo basey_teaser_default($search = true);
-
 					break;
 				}
 

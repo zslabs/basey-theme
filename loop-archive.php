@@ -68,7 +68,7 @@ else {
 		global $post;
 		$author_id = $post->post_author;
 		printf(__('Author Archives: %s', 'basey'), get_the_author_meta('user_nicename', $author_id));
-				}
+	}
 
 	echo '</h2>';
 

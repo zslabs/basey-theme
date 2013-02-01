@@ -5,7 +5,6 @@
  * @return output buffer
  */
 function basey_single_post() {
-
 	global $post;
 	ob_start();
 
@@ -42,7 +41,6 @@ function basey_single_post() {
  * @return output buffer
  */
 function basey_single_default() {
-
 	global $post;
 	ob_start();
 
@@ -50,7 +48,7 @@ function basey_single_default() {
 	<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
 		<?php do_action('basey_post_inside_before'); ?>
 			<header>
-				<?php echo apply_filters('basey_page_title', '<h1>'.get_the_title().'</h1>'); ?>
+				<h1><?php echo apply_filters('basey_page_title', get_the_title()); ?></h1>
 			</header>
 			<?php the_content();
 			wp_link_pages(array('before' => '<nav class="pagination">', 'after' => '</nav>')); ?>

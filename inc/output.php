@@ -15,14 +15,13 @@ logic)
  * add menu to header
  * @return string
  */
-function basey_head_output() {
-
-	// leave .row open (closed in basey_footer_output())
-	echo '<div class="row">';
-		echo '<nav role="navigation">';
-			foundation_nav_bar();
-		echo '</nav>';
-		echo '<div style="clear:both;"></div>';
+function basey_head_output() { ?>
+	<div class="row">
+		<nav role="navigation">
+			<?php foundation_nav_bar();	?>
+		</nav>
+		<div style="clear:both;"></div>
+		<?php
 }
 add_action('basey_head','basey_head_output');
 
@@ -30,11 +29,12 @@ add_action('basey_head','basey_head_output');
  * footer output
  * @return string
  */
-function basey_footer_output() {
-	echo '<div class="panel">';
-		dynamic_sidebar('basey-sidebar');
-	echo '</div>';
-	echo '</div>';
+function basey_footer_output() { ?>
+		<div class="panel">
+			<?php dynamic_sidebar('basey-sidebar'); ?>
+		</div>
+	</div>
+	<?php
 }
 add_action('basey_footer','basey_footer_output');
 
@@ -42,9 +42,8 @@ add_action('basey_footer','basey_footer_output');
  * display query count and load time
  * @return string
  */
-function basey_query_load_time() {
-	echo '<p><strong>'.get_num_queries() . '</strong> queries in <strong>';
-	timer_stop(1);
-	echo '</strong> seconds</p>';
+function basey_query_load_time() { ?>
+	<p><strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds</p>
+	<?php
 }
 add_action('basey_debug','basey_query_load_time');

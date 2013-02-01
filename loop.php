@@ -10,16 +10,11 @@ while (have_posts()) : the_post();
 		break;
 
 		case 'post':
-
 			echo basey_teaser_post();
-
 		break;
 
-
 		default:
-
 			echo basey_teaser_default();
-
 		break;
 	}
 

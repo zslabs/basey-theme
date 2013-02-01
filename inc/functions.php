@@ -79,7 +79,6 @@ function basey_entry_meta() {
  * @return output buffer
  */
 function basey_404_page_content() {
-
 	ob_start(); ?>
 
 	<p><?php echo __('The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.', 'basey'); ?></p>
@@ -100,7 +99,6 @@ function basey_404_page_content() {
  * @return output buffer
  */
 function basey_no_results_content() {
-
 	ob_start(); ?>
 
 	<article id="post-0" class="post no-results not-found">

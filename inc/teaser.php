@@ -6,7 +6,6 @@
  * @return output buffer
  */
 function basey_teaser_post($search = false) {
-
 	ob_start();
 
 	do_action('basey_post_before'); ?>
@@ -65,14 +64,12 @@ function basey_teaser_post($search = false) {
 	return $display;
 }
 
-
 /**
  * returns default teaser view
  * @param  boolean $search are we on the search page or not?
  * @return output buffer
  */
 function basey_teaser_default($search = false) {
-
 	ob_start();
 
 	do_action('basey_post_before'); ?>
@@ -104,17 +101,13 @@ function basey_teaser_default($search = false) {
  * @return output buffer
  */
 function basey_taxonomy_search_teaser_default($term_object,$term_single) {
-
 	ob_start();
 
-	do_action('basey_taxonomy_teaser_before');
-	echo '<article id="tax-' . $term_object->term_id . '" class="' . $term_object->taxonomy . '">';
-	echo '<a href="';
-	echo get_term_link($term_object);
-	echo '">';
-	echo $term_object->name;
-	echo '</a>';
-	echo '</article>';
+	do_action('basey_taxonomy_teaser_before'); ?>
+	<article id="tax-<?php echo $term_object->term_id; ?>" class="<?php echo $term_object->taxonomy; ?>">
+		<a href="<?php echo get_term_link($term_object); ?>"><?php echo $term_object->name; ?></a>
+	</article>
+	<?php
 	do_action('basey_taxonomy_teaser_after');
 
 	$display = apply_filters('basey_taxonomy_teaser_default_view', ob_get_clean());

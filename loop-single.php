@@ -9,16 +9,11 @@ while (have_posts()) : the_post();
 		break;
 
 		case 'post':
-
 			echo basey_single_post();
-
 		break;
 
-
 		default:
-
 			echo basey_single_default();
-
 		break;
 	}
 
