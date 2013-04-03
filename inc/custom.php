@@ -13,9 +13,9 @@ that we'd normally bring in.
  * http://codex.wordpress.org/Function_Reference/register_nav_menus
  * http://codex.wordpress.org/Function_Reference/wp_nav_menu
  */
-register_nav_menus(array(
+register_nav_menus( array(
 	'main-menu' => 'Main Menu' // registers the menu in the WordPress admin menu editor
-));
+) );
 
 /**
  * register sidebars
@@ -25,14 +25,14 @@ register_nav_menus(array(
  * @return void
  */
 function basey_custom_register_sidebars() {
-	$sidebars = array('Sidebar');
+	$sidebars = array( 'Sidebar' );
 
-	foreach($sidebars as $sidebar) {
+	foreach( $sidebars as $sidebar ) {
 		register_sidebar(
 			array(
-				'id'            => 'basey-' . sanitize_title($sidebar),
-				'name'          => __($sidebar, 'basey'),
-				'description'   => __($sidebar, 'basey'),
+				'id'            => 'basey-' . sanitize_title( $sidebar ),
+				'name'          => __( $sidebar, 'basey' ),
+				'description'   => __( $sidebar, 'basey' ),
 				'before_widget' => '<article id="%1$s" class="widget %2$s"><div class="widget-inner">',
 				'after_widget'  => '</div></article>',
 				'before_title'  => '<h3>',
@@ -41,7 +41,7 @@ function basey_custom_register_sidebars() {
 		);
 	}
 }
-add_action('widgets_init', 'basey_custom_register_sidebars');
+add_action( 'widgets_init', 'basey_custom_register_sidebars' );
 
 /**
  * define additional css/js
@@ -52,4 +52,4 @@ add_action('widgets_init', 'basey_custom_register_sidebars');
 function basey_custom_scripts() {
 	$stylesheet_uri = get_stylesheet_directory_uri();
 }
-add_action('wp_enqueue_scripts','basey_custom_scripts');
+add_action( 'wp_enqueue_scripts', 'basey_custom_scripts' );

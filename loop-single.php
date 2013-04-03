@@ -1,8 +1,8 @@
 <?php
 
-while (have_posts()) : the_post();
+while ( have_posts() ) : the_post();
 
-	switch($post->post_type) {
+	switch( $post->post_type) {
 
 		case has_action( "basey_loop_single_{$post->post_type}" ) :
 			do_action( "basey_loop_single_{$post->post_type}" );

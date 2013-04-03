@@ -1,9 +1,9 @@
 <?php
 
 // start loop
-while (have_posts()) : the_post();
+while ( have_posts() ) : the_post();
 
-	switch($post->post_type) {
+	switch( $post->post_type ) {
 
 		case has_action( "basey_loop_teaser_{$post->post_type}" ) :
 			do_action( "basey_loop_teaser_{$post->post_type}" );
@@ -24,8 +24,8 @@ endwhile;
 basey_pagination();
 
 // if no posts
-if ((!have_posts()) || (get_search_query() == ' ')) {
-	do_action('basey_post_before');
-	echo '<p>'._e('Sorry, no results were found.', 'basey').'</p>';
-	do_action('basey_post_after');
+if ( ( !have_posts() ) || ( get_search_query() == ' ' ) ) {
+	do_action( 'basey_post_before' );
+	echo '<p>' . _e( 'Sorry, no results were found.', 'basey' ) . '</p>';
+	do_action( 'basey_post_after' );
 }

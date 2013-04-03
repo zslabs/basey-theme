@@ -23,7 +23,7 @@ function basey_head_output() { ?>
 		<div style="clear:both;"></div>
 		<?php
 }
-add_action('basey_head','basey_head_output');
+add_action( 'basey_head', 'basey_head_output' );
 
 /**
  * footer output
@@ -31,12 +31,12 @@ add_action('basey_head','basey_head_output');
  */
 function basey_footer_output() { ?>
 		<div class="panel">
-			<?php dynamic_sidebar('basey-sidebar'); ?>
+			<?php dynamic_sidebar( 'basey-sidebar' ); ?>
 		</div>
 	</div>
 	<?php
 }
-add_action('basey_footer','basey_footer_output');
+add_action( 'basey_footer', 'basey_footer_output' );
 
 /**
  * display query count and load time
@@ -46,4 +46,4 @@ function basey_query_load_time() { ?>
 	<p><strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds</p>
 	<?php
 }
-add_action('basey_debug','basey_query_load_time');
+add_action( 'basey_debug', 'basey_query_load_time' );
