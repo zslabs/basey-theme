@@ -14,10 +14,7 @@ function basey_setup() {
 
 	add_theme_support( 'menus' );
 
-	// Sets the post revisions to 5
-	if ( !defined( 'WP_POST_REVISIONS' ) ) { define( 'WP_POST_REVISIONS', 5 ); }
-
-	if ( ! isset( $content_width ) ) $content_width = 900;
+	if ( ! isset( $content_width ) ) $content_width = 1000;
 
 }
 add_action( 'after_setup_theme', 'basey_setup' );
@@ -91,6 +88,7 @@ function basey_404_page_content() {
 	<?php get_search_form();
 
 	$display = apply_filters( 'basey_404_page_content_output', ob_get_clean() );
+
 	return $display;
 }
 
@@ -115,6 +113,7 @@ function basey_no_results_content() {
 	<?php
 
 	$display = apply_filters( 'basey_no_results_content_output', ob_get_clean() );
+
 	return $display;
 }
 

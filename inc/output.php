@@ -18,7 +18,22 @@ logic)
 function basey_head_output() { ?>
 	<div class="row">
 		<nav role="navigation">
-			<?php foundation_nav_bar();	?>
+			<?php
+
+			wp_nav_menu( array(
+				'container'       => false,                // remove menu container
+				'container_class' => '',                   // class of container
+				'menu'            => '',                   // menu name
+				'menu_class'      => 'nav-bar',            // adding custom nav class
+				'theme_location'  => 'main-menu',          // where it's located in the theme
+				'before'          => '',                   // before each link <a>
+				'after'           => '',                   // after each link </a>
+				'link_before'     => '',                   // before each link text
+				'link_after'      => '',                   // after each link text
+				'depth'           => 2                     // limit the depth of the nav
+			) );
+
+			?>
 		</nav>
 		<div style="clear:both;"></div>
 		<?php
