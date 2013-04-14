@@ -13,40 +13,63 @@ logic)
 
 /**
  * add menu to header
- * @return string
+ * @return void
  */
 function basey_head_output() { ?>
-	<div class="row">
-		<nav role="navigation">
-			<?php
 
-			wp_nav_menu( array(
-				'container'       => false,                // remove menu container
-				'container_class' => '',                   // class of container
-				'menu'            => '',                   // menu name
-				'menu_class'      => 'nav-bar',            // adding custom nav class
-				'theme_location'  => 'main-menu',          // where it's located in the theme
-				'before'          => '',                   // before each link <a>
-				'after'           => '',                   // after each link </a>
-				'link_before'     => '',                   // before each link text
-				'link_after'      => '',                   // after each link text
-				'depth'           => 2                     // limit the depth of the nav
-			) );
+	<div class="contain-to-grid">
+		<nav class="top-bar">
+			<ul class="title-area">
+				<li class="name">
+					<h1><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
+				</li>
+				<li class="toggle-topbar menu-icon"><a href="#"><span><?php _e('Menu', 'basey'); ?></span></a></li>
+			</ul>
+			<section class="top-bar-section">
+				<?php foundation_top_bar_l(); ?>
 
-			?>
+				<?php foundation_top_bar_r(); ?>
+			</section>
 		</nav>
-		<div style="clear:both;"></div>
-		<?php
+	</div>
+	<?php
 }
 add_action( 'basey_head', 'basey_head_output' );
 
 /**
+ * before main content
+ * @return void
+ */
+function basey_main_before_output() { ?>
+
+	<div class="row">
+		<div class="small-12 columns">
+		<?php
+}
+add_action( 'basey_main_before', 'basey_main_before_output' );
+
+/**
+ * after main content
+ * @return void
+ */
+function basey_main_after_output() { ?>
+
+		</div>
+	</div>
+	<?php
+}
+add_action( 'basey_main_after', 'basey_main_after_output' );
+
+/**
  * footer output
- * @return string
+ * @return void
  */
 function basey_footer_output() { ?>
-		<div class="panel">
-			<?php dynamic_sidebar( 'basey-sidebar' ); ?>
+	<div class="row">
+		<div class="small-12 columns">
+			<div class="panel">
+				<?php dynamic_sidebar( 'basey-sidebar' ); ?>
+			</div>
 		</div>
 	</div>
 	<?php
@@ -55,7 +78,7 @@ add_action( 'basey_footer', 'basey_footer_output' );
 
 /**
  * display query count and load time
- * @return string
+ * @return void
  */
 function basey_query_load_time() { ?>
 	<p><strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds</p>

@@ -1,85 +1,80 @@
 <?php
 
 /**
- * foundation walker
- * https://gist.github.com/3184243
+ * Foundation Menu Walker
+ * https://gist.github.com/awshout/3943026
  */
 
 /**
- * customize the output of menus for Foundation nav bar classes
+ * Customize the output of menus for Foundation top bar classes
  */
-class nav_bar_walker extends Walker_Nav_Menu {
+class top_bar_walker extends Walker_Nav_Menu {
 
-	function display_element( $element, &$children_elements, $max_depth, $depth=0, $args, &$output ) {
-		$element->has_children = !empty( $children_elements[$element->ID] );
-		$element->classes[] .= ( $element->current || in_array( 'current-menu-ancestor', $element->classes ) ) ? 'active' : '';
-		$element->classes[] .= ( $element->has_children && $depth < 1) ? 'has-flyout' : '';
+	function display_element($element, &$children_elements, $max_depth, $depth=0, $args, &$output) {
+		$element->has_children = !empty($children_elements[$element->ID]);
+		$element->classes[] = ($element->current || $element->current_item_ancestor) ? 'active' : '';
+		$element->classes[] = ($element->has_children) ? 'has-dropdown' : '';
 
-		//print_r( $children_elements);
-
-		parent::display_element( $element, &$children_elements, $max_depth, $depth, $args, &$output );
+		parent::display_element($element, $children_elements, $max_depth, $depth, $args, $output);
 	}
 
-	function start_el( &$output, $item, $depth, $args ) {
+	function start_el(&$output, $item, $depth, $args) {
 		$item_html = '';
-		parent::start_el( $item_html, $item, $depth, $args );
+		parent::start_el($item_html, $item, $depth, $args);
 
-		$classes = empty( $item->classes ) ? array() : ( array ) $item->classes;
+		$output .= ($depth == 0) ? '<li class="divider"></li>' : '';
 
-		if(in_array( 'has-flyout', $classes ) ) {
-			$item_html = str_replace( '</a>', '</a><a href="' . esc_attr( $item->url) . '" class="flyout-toggle"><span> </span></a>', $item_html );
+		$classes = empty($item->classes) ? array() : (array) $item->classes;
+
+		if(in_array('section', $classes)) {
+			$output .= '<li class="divider"></li>';
+			$item_html = preg_replace('/<a[^>]*>(.*)<\/a>/iU', '<label>$1</label>', $item_html);
 		}
 
 		$output .= $item_html;
 	}
 
-	function start_lvl( &$output, $depth = 0, $args = array() ) {
-		$output .= "\n<ul class=\"sub-menu flyout\">\n";
+	function start_lvl(&$output, $depth = 0, $args = array()) {
+		$output .= "\n<ul class=\"sub-menu dropdown\">\n";
 	}
 
-} // end nav bar walker
+} // end top bar walker
 
-/**
- * customize the output of page list for foundation nav classes in main_nav_fb
- * http://forrst.com/posts/Using_Short_Page_Titles_for_wp_list_pages_Wordp-uV9
- */
-class page_walker extends Walker_Page {
-	function start_el( &$output, $page, $depth, $args, $current_page ) {
+/*
+http://codex.wordpress.org/Function_Reference/wp_nav_menu
+*/
+// the left top bar
+function foundation_top_bar_l() {
+	wp_nav_menu(array(
+		'container' => false,                           // remove nav container
+		'container_class' => 'menu',           		    // class of container
+		'menu' => '',                      	            // menu name
+		'menu_class' => 'top-bar-menu left',         	// adding custom nav class
+		'theme_location' => 'top-bar-l',                // where it's located in the theme
+		'before' => '',                                 // before each link <a>
+		'after' => '',                                  // after each link </a>
+		'link_before' => '',                            // before each link text
+		'link_after' => '',                             // after each link text
+		'depth' => 5,                                   // limit the depth of the nav
+		'fallback_cb' => false,                         // fallback function (see below)
+		'walker' => new top_bar_walker()
+	));
+} // end left top bar
 
-		$indent = ( $depth) ? str_repeat("\t", $depth) : '';
-
-		extract( $args, EXTR_SKIP);
-		$classes = array( 'page_item', 'page-item-' . $page->ID );
-		if ( !empty( $current_page) ) {
-			$_current_page = get_page( $current_page );
-		if ( isset( $_current_page->ancestors ) && in_array( $page->ID, ( array ) $_current_page->ancestors ) )
-			$classes[] = 'current_page_ancestor';
-		if ( $page->ID == $current_page )
-			$classes[] = 'current_page_item active';
-		elseif ( $_current_page && $page->ID == $_current_page->post_parent )
-			$classes[] = 'current_page_parent';
-		} elseif ( $page->ID == get_option( 'page_for_posts' ) ) {
-			$classes[] = 'current_page_parent';
-		}
-		if ( get_children( $page->ID ) )
-			$classes[] = 'has-flyout';
-
-		$classes = implode( ' ', apply_filters( 'page_css_class', $classes, $page ) );
-
-		$output .= $indent . '<li class="' . $classes . '">';
-		$output .= '<a href="' . get_page_link( $page->ID ) . '" title="'.esc_attr( wp_strip_all_tags( $page->post_title ) ).'">';
-		$output .= $args['link_before'] . $page->post_title . $args['link_after'];
-		$output .= '</a>';
-	}
-	function end_el( &$output, $item, $depth ) {
-		$output .= "</li>\n";
-	}
-	function start_lvl( &$output, $depth ) {
-		$indent = str_repeat( "\t", $depth );
-		$output .= "\n$indent<ul class=\"sub-menu flyout\">\n";
-	}
-	function end_lvl( &$output, $depth ) {
-		$indent = str_repeat( "\t", $depth );
-		$output .= "\n$indent</ul>\n";
-	}
-} // end page walker
+// the right top bar
+function foundation_top_bar_r() {
+	wp_nav_menu(array(
+		'container' => false,                           // remove nav container
+		'container_class' => '',           		        // class of container
+		'menu' => '',                      	            // menu name
+		'menu_class' => 'top-bar-menu right',         	// adding custom nav class
+		'theme_location' => 'top-bar-r',                // where it's located in the theme
+		'before' => '',                                 // before each link <a>
+		'after' => '',                                  // after each link </a>
+		'link_before' => '',                            // before each link text
+		'link_after' => '',                             // after each link text
+		'depth' => 5,                                   // limit the depth of the nav
+		'fallback_cb' => false,                         // fallback function (see below)
+		'walker' => new top_bar_walker()
+	));
+} // end right top bar
