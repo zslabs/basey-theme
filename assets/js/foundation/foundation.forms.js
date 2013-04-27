@@ -37,7 +37,9 @@
         .each(this.append_custom_markup);
       $('form.custom input[type="checkbox"]', $(this.scope)).not('[data-customforms="disabled"]')
         .each(this.append_custom_markup);
-      $('form.custom select', $(this.scope)).not('[data-customforms="disabled"]')
+      $('form.custom select', $(this.scope))
+          .not('[data-customforms="disabled"]')
+          .not('[multiple=multiple]')
         .each(this.append_custom_select);
     },
 
@@ -179,7 +181,7 @@
     },
 
     append_custom_markup : function (idx, sel) {
-      var $this = $(sel).hide(),
+      var $this = $(sel).addClass('hidden-field'),
           type  = $this.attr('type'),
           $span = $this.next('span.custom.' + type);
 
@@ -222,7 +224,7 @@
         $currentSelect = $customSelect.prepend('<a href="#" class="current">' + $selectedOption.html() + '</a>' ).find( ".current" );
         $this
           .after( $customSelect )
-          .hide();
+          .addClass('hidden-field');
 
       } else {
         liHtml = $options.map(function() {

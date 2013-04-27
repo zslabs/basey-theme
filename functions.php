@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Foundation version: 4.1.2
+ * Foundation version: 4.1.5
  */
 
 if ( !defined( 'BASEY_VER' ) ) {
-	define( 'BASEY_VER', '4.1.2' );
+	define( 'BASEY_VER', '4.1.5' );
 }
 
 require_once locate_template( '/inc/scripts.php' );      // modified scripts output
