@@ -1,4 +1,5 @@
-(function($) {
+(function( $ ) {
+  "use strict";
 
 	// Smooth Scroll
 	$('a.scroll').click(function(event) {
@@ -13,4 +14,4 @@
 	// Foundation
 	$(document).foundation();
 
-})(jQuery);
+}(jQuery));
