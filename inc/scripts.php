@@ -15,7 +15,7 @@ if ( !defined( 'BASEY_NO_ASSETS') ) {
 		function basey_styles() {
 			wp_enqueue_style( 'foundation-app', get_template_directory_uri() . '/assets/css/app.css', false, BASEY_VER, 'all' );
 		}
-		add_action( 'wp_enqueue_scripts', 'basey_styles', 4 );
+		add_action( 'wp_enqueue_scripts', 'basey_styles', 12 );
 	}
 
 	// Don't want Basey to load any javascript?
@@ -27,19 +27,9 @@ if ( !defined( 'BASEY_NO_ASSETS') ) {
 		 * @return void
 		 */
 		function basey_register_modernizr() {
-			wp_register_script( 'foundation-modernizr', get_template_directory_uri() . '/assets/js/vendor/custom.modernizr.js', '', BASEY_VER, false );
+			wp_enqueue_script( 'foundation-modernizr', get_template_directory_uri() . '/assets/js/vendor/custom.modernizr.js', '', BASEY_VER, false );
 		}
-		add_action( 'init', 'basey_register_modernizr' );
-
-		/**
-		 * Print Modernizr at the top of wp_head()
-		 * Since we want this to load as soon as possible
-		 * @return void
-		 */
-		function basey_print_modernizr() {
-			wp_print_scripts( 'foundation-modernizr' );
-		}
-		add_action( 'wp_head', 'basey_print_modernizr', 4 );
+		add_action( 'wp_enqueue_scripts', 'basey_register_modernizr', 8 );
 
 		/**
 		 * Enqueue scripts
