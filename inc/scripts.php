@@ -47,6 +47,7 @@ if ( !defined( 'BASEY_NO_ASSETS') ) {
 				wp_enqueue_script( 'jquery-smooth-scroll', get_template_directory_uri() . '/assets/js/vendor/jquery.smooth-scroll.js', array( 'jquery' ), BASEY_VER, true );
 
 				wp_enqueue_script( 'foundation', get_template_directory_uri() . '/assets/js/foundation/foundation.js', array( 'jquery' ), BASEY_VER, true );
+				wp_enqueue_script( 'foundation-abide', get_template_directory_uri() . '/assets/js/foundation/foundation.abide.js', array( 'jquery' ), BASEY_VER, true );
 				wp_enqueue_script( 'foundation-alerts', get_template_directory_uri() . '/assets/js/foundation/foundation.alerts.js', array( 'jquery' ), BASEY_VER, true );
 				wp_enqueue_script( 'foundation-clearing', get_template_directory_uri() . '/assets/js/foundation/foundation.clearing.js', array( 'jquery' ), BASEY_VER, true );
 				wp_enqueue_script( 'foundation-cookie', get_template_directory_uri() . '/assets/js/foundation/foundation.cookie.js', array( 'jquery' ), BASEY_VER, true );
