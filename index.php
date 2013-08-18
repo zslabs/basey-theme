@@ -27,7 +27,7 @@ locate_template( 'templates/header.php', true, true );
 
 	// if no posts
 	if ( ( !have_posts() ) || ( get_search_query() == ' ' ) ) {
-		echo '<p>' . _e( 'Sorry, no results were found.', 'basey' ) . '</p>';
+		basey_no_results();
 	}
 
 locate_template( 'templates/footer.php', true, true );

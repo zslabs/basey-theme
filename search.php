@@ -34,9 +34,6 @@ locate_template( 'templates/header.php', true, true );
 			echo '</ul>';
 		}
 
-	do_action( 'basey_search_header_after' );
-
-
 		// if post types are not empty, print each section and ultimately the posts within them out
 		if ( !empty( $results['post_types'] ) ) {
 			foreach ( $results['post_types'] as $post_type) {
@@ -53,8 +50,6 @@ locate_template( 'templates/header.php', true, true );
 					echo '<h3>' . sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ) . '</h3>';
 					echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a>' : '' );
 				}
-
-				do_action( "basey_search_before_{$post_type_name}" );
 
 				$i = 0;
 				foreach ( $post_type['ids'] as $post) {
@@ -83,8 +78,6 @@ locate_template( 'templates/header.php', true, true );
 					wp_reset_postdata();
 				}
 
-				do_action( "basey_search_after_{$post_type_name}" );
-
 				// close container around each post type for proper anchors
 				echo '</section>';
 			}
@@ -95,7 +88,7 @@ locate_template( 'templates/header.php', true, true );
 		}
 
 	} else {
-		echo basey_no_results_content();
+		basey_no_results();
 	}
 
 	if(isset( $_GET['post_type'] ) ) {

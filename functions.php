@@ -9,7 +9,7 @@ if ( !defined( 'BASEY_VER' ) ) {
 }
 
 locate_template( '/inc/scripts.php', true, true );      // modified scripts output
-locate_template( '/inc/init.php', true, true );         // helper functions
+locate_template( '/inc/functions.php', true, true );         // helper functions
 locate_template( '/inc/comments.php', true, true );     // comment walker
 locate_template( '/inc/gallery.php', true, true );      // gallery rewrite
 locate_template( '/inc/search.php', true, true );       // search helpers

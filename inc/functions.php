@@ -73,54 +73,21 @@ function main_nav_fb() {
 }
 
 /**
- * return 404 page output
- * @return output buffer
- */
-function basey_404_page_content() {
-	ob_start(); ?>
-
-	<p><?php echo __( 'The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.', 'basey' ); ?></p>
-	<p><?php _e( 'Please try the following:', 'basey' ); ?></p>
-	<ul>
-		<li><?php _e( 'Check your spelling', 'basey' ); ?> </li>
-		<li><?php printf(__( 'Return to the <a href="%s">home page</a>', 'basey' ), home_url() ); ?></li>
-		<li><?php _e( 'Click the <a href="javascript:history.back()">Back</a> button', 'basey' ); ?></li>
-	</ul>
-	<?php get_search_form();
-
-	$display = apply_filters( 'basey_404_page_content_output', ob_get_clean() );
-
-	return $display;
-}
-
-/**
  * returns 'nothing found' content
- * @return output buffer
+ * @return void
  */
-function basey_no_results_content() {
-	ob_start(); ?>
+function basey_no_results() { ?>
 
-	<article id="post-0" class="post no-results not-found">
-		<header class="entry-header">
-			<h1 class="entry-title"><?php _e( 'Nothing Found', 'basey' ); ?></h1>
-		</header><!-- .entry-header -->
+	<div class="alert">
+		<?php _e('Sorry, no results were found.', 'basey'); ?>
+	</div>
+	<?php get_search_form(); ?>
 
-		<div class="entry-content">
-			<p><?php _e( 'Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'basey' ); ?></p>
-			<?php get_search_form(); ?>
-		</div><!-- .entry-content -->
-	</article><!-- #post-0 -->
-
-	<?php
-
-	$display = apply_filters( 'basey_no_results_content_output', ob_get_clean() );
-
-	return $display;
-}
+<?php }
 
 /**
  * provides basic query info and output for pagination
- * @return string
+ * @return void
  */
 function basey_pagination() {
 	global $wp_query;
@@ -142,7 +109,8 @@ function basey_pagination() {
 }
 
 /**
- * Page titles
+ * Returns page titles based on context
+ * @return void
  */
 function basey_title() {
 	if (is_home()) {

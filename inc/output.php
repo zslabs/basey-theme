@@ -4,7 +4,7 @@
 /*	Define HTML
 
 This section is used to add your HTML output to the theme. If you look throughout the theme, you'll notice
-several function() calls that share similarities baseyd on their position. Those are merely references to
+several function() calls that share similarities based on their position. Those are merely references to
 WP actions that you can add content to (in this case - HTML output). This way, it keeps our core theme files
 neat and allows us to change HTML on several pages easily (you can always use standard conditional template
 logic)
