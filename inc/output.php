@@ -26,7 +26,7 @@ function basey_head_output() { ?>
 				<li class="toggle-topbar menu-icon"><a href="#"><span><?php _e('Menu', 'basey'); ?></span></a></li>
 			</ul>
 			<section class="top-bar-section">
-				<?php wp_nav_menu(); ?>
+				<?php foundation_top_bar_l(); ?>
 			</section>
 		</nav>
 	</div>
