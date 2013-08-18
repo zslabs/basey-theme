@@ -34,8 +34,8 @@ function foundation_nav_bar() {
 		'link_before'     => '',                   // before each link text
 		'link_after'      => '',                   // after each link text
 		'depth'           => 2,                    // limit the depth of the nav
-		'fallback_cb'     => 'main_nav_fb',        // fallback function (see below)
-		'walker'          => new nav_bar_walker()  // walker to customize menu (see foundation-nav-walker)
+		'fallback_cb'     => 'main_nav_fb'        // fallback function (see below)
+		//'walker'          => new nav_bar_walker()  // walker to customize menu (see foundation-nav-walker)
 	) );
 }
 
@@ -55,20 +55,11 @@ function main_nav_fb() {
 		'sort_column'  => 'menu_order, post_title',
 		'link_before'  => '',
 		'link_after'   => '',
-		'walker'       => new page_walker(),
+		//'walker'       => new page_walker(),
 		'post_type'    => 'page',
 		'post_status'  => 'publish'
 	) );
 	echo '</ul>';
-}
-
-/**
- * return post entry meta information
- * @return string
- */
-function basey_entry_meta() {
-	echo '<time class="updated" datetime="'. get_the_time( 'c' ) .'" pubdate>'. sprintf(__( 'Posted on %s at %s.', 'basey' ), get_the_date(), get_the_time() ) .'</time>';
-	echo '<p class="byline author vcard">'. __( 'Written by', 'basey' ) .' <a href="'. get_author_posts_url( get_the_author_meta( 'ID' ) ) .'" rel="author" class="fn">'. get_the_author() .'</a></p>';
 }
 
 /**
@@ -141,48 +132,38 @@ function basey_pagination() {
 }
 
 /**
- * change number of search results to show on page
- * @param  array $query
- * @return array
+ * Page titles
  */
-function basey_search_size( $query ) {
-	$post_types_list = array();
-	$args = array(
-		'public'   => true
-	);
-	$output = 'names'; // names or objects, note names is the default
-	$operator = 'and'; // 'and' or 'or'
-	$post_types = get_post_types( $args, $output, $operator );
-	$count = count( $post_types);
-	if ( $query->is_search && is_main_query() && !isset( $_GET['post_type'] ) /*&& $query->query_vars['post_type'] != 'nav_menu_item'*/) // Make sure it is a search page
-		$query->query_vars['posts_per_page'] = intval( get_option( 'posts_per_page' ) ) * $count; // Multiplies the setting for posts_page_page by the number of post types publicly queryable
-
-	return $query; // Return our modified query variables
-}
-add_filter( 'pre_get_posts', 'basey_search_size' ); // Hook our custom function onto the request filter
-
-/**
- * allows pages to be publicly queryable
- * @return void
- */
-function basey_page_query() {
-	if ( post_type_exists( 'page' ) ) {
-		global $wp_post_types;
-		$wp_post_types['page']->publicly_queryable = true;
-	}
-}
-add_action( 'init', 'basey_page_query', 1 );
-
-/**
- * if only one result is found on search, go to that page
- * @return void
- */
-function basey_one_match_redirect() {
-	if (is_search() ) {
-		global $wp_query;
-		if ( $wp_query->post_count == 1) {
-			wp_redirect( get_permalink( $wp_query->posts['0']->ID ) );
+function basey_title() {
+	if (is_home()) {
+		if (get_option('page_for_posts', true)) {
+			echo get_the_title(get_option('page_for_posts', true));
+		} else {
+			_e('Latest Posts', 'basey');
 		}
+	} elseif (is_archive()) {
+		$term = get_term_by('slug', get_query_var('term'), get_query_var('taxonomy'));
+		if ($term) {
+			echo $term->name;
+		} elseif (is_post_type_archive()) {
+			echo get_queried_object()->labels->name;
+		} elseif (is_day()) {
+			printf(__('Daily Archives: %s', 'basey'), get_the_date());
+		} elseif (is_month()) {
+			printf(__('Monthly Archives: %s', 'basey'), get_the_date('F Y'));
+		} elseif (is_year()) {
+			printf(__('Yearly Archives: %s', 'basey'), get_the_date('Y'));
+		} elseif (is_author()) {
+			$author = get_queried_object();
+			printf(__('Author Archives: %s', 'basey'), $author->display_name);
+		} else {
+			single_cat_title();
+		}
+	} elseif (is_search()) {
+		printf(__('Search Results for %s', 'basey'), get_search_query());
+	} elseif (is_404()) {
+		_e('Not Found', 'basey');
+	} else {
+		the_title();
 	}
 }
-add_action( 'template_redirect', 'basey_one_match_redirect' );

@@ -26,9 +26,7 @@ function basey_head_output() { ?>
 				<li class="toggle-topbar menu-icon"><a href="#"><span><?php _e('Menu', 'basey'); ?></span></a></li>
 			</ul>
 			<section class="top-bar-section">
-				<?php foundation_top_bar_l(); ?>
-
-				<?php foundation_top_bar_r(); ?>
+				<?php wp_nav_menu(); ?>
 			</section>
 		</nav>
 	</div>
@@ -37,28 +35,28 @@ function basey_head_output() { ?>
 add_action( 'basey_head', 'basey_head_output' );
 
 /**
- * before main content
+ * before content content
  * @return void
  */
-function basey_main_before_output() { ?>
+function basey_content_before_output() { ?>
 
 	<div class="row">
 		<div class="small-12 columns">
 		<?php
 }
-add_action( 'basey_main_before', 'basey_main_before_output' );
+add_action( 'basey_content_before', 'basey_content_before_output' );
 
 /**
- * after main content
+ * after content content
  * @return void
  */
-function basey_main_after_output() { ?>
+function basey_content_after_output() { ?>
 
 		</div>
 	</div>
 	<?php
 }
-add_action( 'basey_main_after', 'basey_main_after_output' );
+add_action( 'basey_content_after', 'basey_content_after_output' );
 
 /**
  * footer output
