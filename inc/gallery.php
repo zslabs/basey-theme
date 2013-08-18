@@ -103,11 +103,9 @@ function basey_gallery($attr) {
 
 	return $output;
 }
-if (current_theme_supports('bootstrap-gallery')) {
-	remove_shortcode('gallery');
-	add_shortcode('gallery', 'basey_gallery');
-	add_filter('use_default_gallery_style', '__return_null');
-}
+remove_shortcode('gallery');
+add_shortcode('gallery', 'basey_gallery');
+add_filter('use_default_gallery_style', '__return_null');
 
 /**
  * Add class="thumbnail img-thumbnail" to attachment items
