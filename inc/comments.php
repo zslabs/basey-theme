@@ -3,6 +3,7 @@
  * Use Bootstrap's media object for listing comments
  *
  * @link http://twitter.github.com/bootstrap/components.html#media
+ * @source http://roots.io
  */
 class Basey_Walker_Comment extends Walker_Comment {
 	function start_lvl(&$output, $depth = 0, $args = array()) {

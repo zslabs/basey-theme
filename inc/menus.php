@@ -2,7 +2,7 @@
 
 /**
  * Foundation Menu Walker
- * https://gist.github.com/awshout/3943026
+ * @source https://gist.github.com/awshout/3943026
  */
 
 /**

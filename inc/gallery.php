@@ -6,6 +6,7 @@
  * The number of columns must be a factor of 12.
  *
  * @link http://twbs.github.io/bootstrap/components/#thumbnails
+ * @source http://roots.io
  */
 function basey_gallery($attr) {
 	$post = get_post();

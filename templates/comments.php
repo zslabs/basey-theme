@@ -1,4 +1,8 @@
 <?php
+
+/**
+ * @source http://roots.io
+ */
 	if (post_password_required()) {
 		return;
 	}
