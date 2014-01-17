@@ -32,6 +32,10 @@ article.post {
 	header + .entry-content {
 		margin-top:rem-calc(15px);
 	}
+
+	* + #comments {
+		margin-top: rem-calc(15px);
+	}
 }
 
 /**
