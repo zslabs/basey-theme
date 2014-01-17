@@ -1,19 +1,19 @@
 <?php
 
 /**
- * Foundation version: 4.3.1
+ * Foundation version: 5.0.3
  */
 
 if ( !defined( 'BASEY_VER' ) ) {
-	define( 'BASEY_VER', '4.3.1' );
+	define( 'BASEY_VER', '5.0.3' );
 }
 
-locate_template( '/inc/scripts.php', true, true );      // modified scripts output
-locate_template( '/inc/functions.php', true, true );         // helper functions
-locate_template( '/inc/comments.php', true, true );     // comment walker
-locate_template( '/inc/gallery.php', true, true );      // gallery rewrite
-locate_template( '/inc/search.php', true, true );       // search helpers
-locate_template( '/inc/menus.php', true, true );        // menu walkers
-locate_template( '/inc/widgets.php', true, true );      // widgets
-locate_template( '/inc/custom.php', true, true );       // custom functions
-locate_template( '/inc/output.php', true, true );       // html output
+locate_template( '/inc/assets.php', true, true );
+locate_template( '/inc/functions.php', true, true );
+locate_template( '/inc/comments.php', true, true );
+locate_template( '/inc/gallery.php', true, true );
+locate_template( '/inc/search.php', true, true );
+locate_template( '/inc/menus.php', true, true );
+locate_template( '/inc/widgets.php', true, true );
+locate_template( '/inc/custom.php', true, true );
+locate_template( '/inc/output.php', true, true );

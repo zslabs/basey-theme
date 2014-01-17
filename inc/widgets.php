@@ -1,8 +1,8 @@
 <?php
 
 /**
- * register sidebars
- * add more by adding onto the $sidebar array
+ * Register sidebars
+ * Add more by adding onto the $sidebar array
  * http://codex.wordpress.org/Function_Reference/register_sidebar
  * http://codex.wordpress.org/Function_Reference/get_sidebar
  * @return void

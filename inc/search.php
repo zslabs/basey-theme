@@ -1,7 +1,7 @@
 <?php
 
 /**
- * change number of search results to show on page
+ * Change number of search results to show on page
  * @param  array $query
  * @return array
  */
@@ -14,7 +14,7 @@ function basey_search_size( $query ) {
 	$operator = 'and'; // 'and' or 'or'
 	$post_types = get_post_types( $args, $output, $operator );
 	$count = count( $post_types);
-	if ( $query->is_search && is_main_query() && !isset( $_GET['post_type'] ) /*&& $query->query_vars['post_type'] != 'nav_menu_item'*/) // Make sure it is a search page
+	if ( $query->is_search && $query->is_main_query() && !isset( $_GET['post_type'] ) /*&& $query->query_vars['post_type'] != 'nav_menu_item'*/) // Make sure it is a search page
 		$query->query_vars['posts_per_page'] = intval( get_option( 'posts_per_page' ) ) * $count; // Multiplies the setting for posts_page_page by the number of post types publicly queryable
 
 	return $query; // Return our modified query variables
@@ -22,7 +22,7 @@ function basey_search_size( $query ) {
 add_filter( 'pre_get_posts', 'basey_search_size' ); // Hook our custom function onto the request filter
 
 /**
- * allows pages to be publicly queryable
+ * Allows pages to be publicly queryable
  * @return void
  */
 function basey_page_query() {
@@ -34,7 +34,7 @@ function basey_page_query() {
 add_action( 'init', 'basey_page_query', 1 );
 
 /**
- * if only one result is found on search, go to that page
+ * If only one result is found on search, go to that page
  * @return void
  */
 function basey_one_match_redirect() {

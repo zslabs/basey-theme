@@ -12,13 +12,13 @@ logic)
 /*-----------------------------------------------------------------------------------*/
 
 /**
- * add menu to header
+ * Add menu to header
  * @return void
  */
 function basey_head_output() { ?>
 
 	<div class="contain-to-grid">
-		<nav class="top-bar">
+		<nav class="top-bar" data-topbar>
 			<ul class="title-area">
 				<li class="name">
 					<h1><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
@@ -35,51 +35,52 @@ function basey_head_output() { ?>
 add_action( 'basey_head', 'basey_head_output' );
 
 /**
- * before content content
+ * Before content content
  * @return void
  */
 function basey_content_before_output() { ?>
-
-	<div class="row">
-		<div class="small-12 columns">
-		<?php
+	<section class="block">
+		<div class="row">
+			<div class="large-8 columns">
+			<?php
 }
 add_action( 'basey_content_before', 'basey_content_before_output' );
 
 /**
- * after content content
+ * After content content
  * @return void
  */
 function basey_content_after_output() { ?>
 
+			</div>
+			<div class="large-4 columns">
+				<div class="panel">
+					<?php dynamic_sidebar( 'basey-sidebar' ); ?>
+				</div>
+			</div>
 		</div>
-	</div>
+	</section>
 	<?php
 }
 add_action( 'basey_content_after', 'basey_content_after_output' );
 
-/**
- * footer output
- * @return void
- */
-function basey_footer_output() { ?>
-	<div class="row">
-		<div class="small-12 columns">
-			<div class="panel">
-				<?php dynamic_sidebar( 'basey-sidebar' ); ?>
-			</div>
-		</div>
-	</div>
-	<?php
-}
-add_action( 'basey_footer', 'basey_footer_output' );
 
 /**
- * display query count and load time
+ * Display query count and load time
  * @return void
  */
-function basey_query_load_time() { ?>
-	<p><strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds</p>
-	<?php
+function basey_query_load_time() {
+
+	if (current_user_can( 'manage_options' )) { ?>
+		<footer id="bottom">
+			<div class="row">
+				<div class="small-12 columns">
+					<div class="panel">
+						<strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds
+					</div>
+				</div>
+			</div>
+		</footer>
+	<?php }
 }
 add_action( 'basey_debug', 'basey_query_load_time' );

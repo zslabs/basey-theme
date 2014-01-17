@@ -1,0 +1,12 @@
+{
+  "name": "foundation-compass-app",
+  "version": "0.0.1",
+  "private": "true",
+  "dependencies": {
+    "foundation": "zurb/bower-foundation",
+    "parsleyjs": "1.2.*",
+    "selectivizr": "*",
+    "respond": "*",
+    "REM-unit-polyfill": "*"
+  }
+}

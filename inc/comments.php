@@ -2,13 +2,12 @@
 /**
  * Use Bootstrap's media object for listing comments
  *
- * @link http://twitter.github.com/bootstrap/components.html#media
- * @source http://roots.io
+ * @link http://getbootstrap.com/components/#media
  */
 class Basey_Walker_Comment extends Walker_Comment {
 	function start_lvl(&$output, $depth = 0, $args = array()) {
 		$GLOBALS['comment_depth'] = $depth + 1; ?>
-		<ul <?php comment_class('media unstyled comment-' . get_comment_ID()); ?>>
+		<ul <?php comment_class('nested comment-' . get_comment_ID()); ?>>
 		<?php
 	}
 
@@ -29,7 +28,7 @@ class Basey_Walker_Comment extends Walker_Comment {
 
 		extract($args, EXTR_SKIP); ?>
 
-	<li id="comment-<?php comment_ID(); ?>" <?php comment_class('media comment-' . get_comment_ID()); ?>>
+	<li id="comment-<?php comment_ID(); ?>" <?php comment_class('comment-' . get_comment_ID()); ?>>
 		<?php include(locate_template('templates/comment.php')); ?>
 	<?php
 	}
@@ -39,12 +38,6 @@ class Basey_Walker_Comment extends Walker_Comment {
 			call_user_func($args['end-callback'], $comment, $args, $depth);
 			return;
 		}
-		echo "</div></li>\n";
+		echo "</article></li>\n";
 	}
 }
-
-function basey_get_avatar($avatar) {
-	$avatar = str_replace("class='avatar", "class='avatar pull-left media-object", $avatar);
-	return $avatar;
-}
-add_filter('get_avatar', 'basey_get_avatar');

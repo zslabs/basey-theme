@@ -1,0 +1,10 @@
+{
+	"boss": true,
+	"sub": true,
+	"evil": true,
+	"browser": true,
+	"globals": {
+	    "module": false,
+        "require": true
+	}
+}

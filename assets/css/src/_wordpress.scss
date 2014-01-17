@@ -1,0 +1,110 @@
+/**
+ * Article list
+ */
+article.post {
+	margin-bottom: rem-calc(30px);
+	padding-bottom: rem-calc(30px);
+	border-bottom:1px solid $panel-border-color;
+
+	&:last-of-type {
+		padding-bottom: 0;
+		margin-bottom: 0;
+		border-bottom:0;
+	}
+
+	.entry-content {
+
+		>:last-child {
+			margin-bottom: 0;
+		}
+
+		+ * {
+			margin-top:rem-calc(15px);
+		}
+	}
+
+	.meta {
+		font-size:rem-calc(14px);
+		color:scale-color($body-font-color, $lightness: 25%);
+		margin-bottom: 0;
+	}
+
+	header + .entry-content {
+		margin-top:rem-calc(15px);
+	}
+}
+
+/**
+ * Comments
+ */
+.comment-list {
+	margin: 0;
+	list-style:none;
+
+	.nested {
+		list-style: none;
+		margin-left: rem-calc(30px);
+
+		@media #{$medium-up} {
+			margin-left: rem-calc(60px);
+		}
+	}
+
+	li {
+		margin-bottom: rem-calc(15px);
+	}
+
+	.comment-header {
+		@include panel($panel-bg, $padding:rem-calc(10px));
+		@extend .clearfix;
+	}
+
+	.avatar {
+		display: block;
+		float:left;
+		margin-right: rem-calc(10px);
+	}
+
+	.comment-meta {
+		font-size:rem-calc(14px);
+		color:scale-color($body-font-color, $lightness: 25%);
+	}
+
+	.comment-body {
+
+		*:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+/**
+ * Pagination
+ */
+ul.page-numbers {
+	@extend .pagination;
+	margin-top: rem-calc(30px);
+	padding-top: rem-calc(30px);
+	border-top: 1px solid $panel-border-color;
+	margin-bottom: 0;
+}
+ul.pagination {
+	margin-bottom: 0;
+
+	li:empty {
+		display: none;
+	}
+}
+
+/**
+ * Parsley
+ */
+.parsley-error-list {
+	list-style: none;
+	background:$alert-color;
+	color:#fff;
+	padding:$form-spacing / 2;
+	font-size:rem-calc(14px);
+	margin-left: 0;
+	margin-top:-$form-spacing;
+}

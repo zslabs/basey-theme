@@ -10,8 +10,6 @@ function basey_setup() {
 
 	// http://codex.wordpress.org/Post_Thumbnails
 	add_theme_support( 'post-thumbnails' );
-	set_post_thumbnail_size( 150, 150, false );
-
 	add_theme_support( 'menus' );
 
 	/**
@@ -86,7 +84,7 @@ function basey_no_results() { ?>
 <?php }
 
 /**
- * provides basic query info and output for pagination
+ * Pagination for lists
  * @return void
  */
 function basey_pagination() {
@@ -95,17 +93,37 @@ function basey_pagination() {
 	$big = 999999999; // need an unlikely integer
 	if ( $total_pages > 1 ) {
 		$current_page = max(1, get_query_var( 'paged' ) );
-		echo '<nav class="page-nav">';
 		echo paginate_links( array(
 			'base'      => str_replace( $big, '%#%', esc_url( get_pagenum_link( $big ) ) ),
 			'format'    => '?paged=%#%',
 			'current'   => $current_page,
 			'total'     => $total_pages,
+			'type'      => 'list',
 			'prev_text' => 'Prev',
 			'next_text' => 'Next'
 		) );
-		echo '</nav>';
 	}
+}
+
+/**
+ * Pagination for single items
+ * @return void
+ */
+function basey_page_nav() {
+
+	$args = array(
+		'before'           => '<ul class="pagination"><li>',
+		'after'            => '</ul>',
+		'link_before'      => '',
+		'link_after'       => '',
+		'next_or_number'   => 'number',
+		'separator'        => '</li><li>',
+		'nextpagelink'     => __( 'Next page' ),
+		'previouspagelink' => __( 'Previous page' ),
+		'pagelink'         => '%',
+		'echo'             => 1
+	);
+	wp_link_pages( $args );
 }
 
 /**

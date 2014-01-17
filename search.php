@@ -22,16 +22,17 @@ locate_template( 'templates/header.php', true, true );
 
 		// generates anchor links for each term/post type found
 		if( !isset( $_GET['post_type'] ) && !empty( $results ) ) {
-			echo '<ul id="results-overview-list">';
+			echo '<dl class="sub-nav">';
 			if ( !empty( $results['post_types'] ) ) {
+				echo '<dt>Post Types:</dt>';
 				foreach ( $results['post_types'] as $post_type) {
 					$count = count( $post_type['ids'] );
 					$post_type_name = $post_type['name'];
 					$post_type_name = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
-					echo '<li class="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#%1$s">%2$s %3$s found</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</li>';
+					echo '<dd class="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#%1$s">%2$s %3$s found</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</dd>';
 				}
 			}
-			echo '</ul>';
+			echo '</dl>';
 		}
 
 		// if post types are not empty, print each section and ultimately the posts within them out
@@ -47,7 +48,7 @@ locate_template( 'templates/header.php', true, true );
 				$count = count( $post_type['ids'] );
 				if( !isset( $_GET['post_type'] ) ) {
 					$post_type_label = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
-					echo '<h3>' . sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ) . '</h3>';
+					echo '<h2>' . sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ) . '</h2>';
 					echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a>' : '' );
 				}
 
@@ -60,7 +61,6 @@ locate_template( 'templates/header.php', true, true );
 					$template_available = locate_template( 'templates/teaser/' . get_post_type() . '.php' ) ? get_post_type() : false;
 
 					switch( get_post_type() ) {
-
 
 						case $template_available :
 							locate_template( 'templates/teaser/' . get_post_type() . '.php', true, false );
