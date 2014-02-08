@@ -41,6 +41,9 @@ article.post {
 /**
  * Comments
  */
+#comments {
+	@extend .clearfix;
+}
 .comment-list {
 	margin: 0;
 	list-style:none;
@@ -87,6 +90,7 @@ article.post {
  */
 ul.page-numbers {
 	@extend .pagination;
+	@extend .clearfix;
 	margin-top: rem-calc(30px);
 	padding-top: rem-calc(30px);
 	border-top: 1px solid $panel-border-color;
@@ -94,9 +98,20 @@ ul.page-numbers {
 }
 ul.pagination {
 	margin-bottom: 0;
+	@extend .clearfix;
 
 	li:empty {
 		display: none;
+	}
+}
+
+/**
+ * Gallery
+ */
+.gallery-row {
+
+	+ .gallery-row {
+		margin-top: ($column-gutter / 2);
 	}
 }
 

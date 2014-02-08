@@ -50,7 +50,7 @@ function basey_gallery($attr) {
 
 	$id = intval($id);
 	$columns = (12 % $columns == 0) ? $columns: 4;
-	$grid = sprintf('col-sm-%1$s col-lg-%1$s', 12/$columns);
+	$grid = sprintf('small-%1$s large-%1$s columns', 12/$columns);
 
 	if ($order === 'RAND') {
 		$orderby = 'none';
@@ -113,7 +113,7 @@ add_filter('use_default_gallery_style', '__return_null');
  */
 function basey_attachment_link_class($html) {
 	$postid = get_the_ID();
-	$html = str_replace('<a', '<a class="thumbnail img-thumbnail"', $html);
+	$html = str_replace('<a', '<a class="th"', $html);
 	return $html;
 }
 add_filter('wp_get_attachment_link', 'basey_attachment_link_class', 10, 1);

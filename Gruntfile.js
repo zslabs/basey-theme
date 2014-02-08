@@ -26,6 +26,17 @@ module.exports = function(grunt) {
 			}
 		},
 
+		autoprefixer: {
+
+			options: {
+				browsers: ['last 2 version', 'ie 9']
+			},
+			dist: {
+				src: 'assets/css/build/app.css',
+				dest: 'assets/css/build/app.css'
+			}
+		},
+
 		copy: {
 			main: {
 				files: [
@@ -44,7 +55,7 @@ module.exports = function(grunt) {
 					"bower_components/respond/dest/respond.min.js",
 					"bower_components/REM-unit-polyfill/js/rem.js"
 				],
-				dest: "assets/js/build/ie.js"
+				dest: "assets/js/build/ie.min.js"
 			},
 			dist: {
 				options: {
@@ -53,9 +64,7 @@ module.exports = function(grunt) {
 				src: [
 					// Foundation Vendor
 					"bower_components/foundation/js/vendor/fastclick.js",
-					"bower_components/foundation/js/vendor/jquery.autocomplete.js",
 					"bower_components/foundation/js/vendor/placeholder.js",
-					"bower_components/foundation/js/vendor/jquery.cookie.js",
 					// Foundation Core
 					"bower_components/foundation/js/foundation/foundation.js",
 					"bower_components/foundation/js/foundation/foundation.abide.js",
@@ -63,6 +72,7 @@ module.exports = function(grunt) {
 					"bower_components/foundation/js/foundation/foundation.alert.js",
 					"bower_components/foundation/js/foundation/foundation.clearing.js",
 					"bower_components/foundation/js/foundation/foundation.dropdown.js",
+					"bower_components/foundation/js/foundation/foundation.equalizer.js",
 					"bower_components/foundation/js/foundation/foundation.interchange.js",
 					"bower_components/foundation/js/foundation/foundation.joyride.js",
 					"bower_components/foundation/js/foundation/foundation.magellan.js",
@@ -78,15 +88,16 @@ module.exports = function(grunt) {
 					"assets/js/src/_init.js"
 
 					],
-				dest: "assets/js/build/scripts.js"
+				dest: "assets/js/build/scripts.min.js"
 			}
 		},
 
 		uglify: {
 			min: {
 				files: {
-					"assets/js/build/scripts.min.js": ["assets/js/build/scripts.js"],
-					"assets/js/build/ie.min.js": ["assets/js/build/ie.js"]
+					"assets/js/build/scripts.min.js": ["assets/js/build/scripts.min.js"],
+					"assets/js/build/ie.min.js": ["assets/js/build/ie.min.js"],
+					"assets/js/vendor/modernizr.js": ["assets/js/vendor/modernizr.js"]
 				}
 			}
 		},

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Foundation version: 5.0.3
+ * Foundation version: 5.1.1
  */
 
 if ( !defined( 'BASEY_VER' ) ) {
-	define( 'BASEY_VER', '5.0.3' );
+	define( 'BASEY_VER', '5.1.1' );
 }
 
 locate_template( '/inc/assets.php', true, true );
