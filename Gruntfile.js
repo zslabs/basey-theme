@@ -18,10 +18,14 @@ module.exports = function(grunt) {
 			}
 		},
 
-		compass: {
+		sass: {
 			dist: {
 				options: {
-					config: 'config.rb'
+					style: "compressed",
+					loadPath: "bower_components/foundation/scss"
+				},
+				files: {
+					'assets/css/build/app.css': 'assets/css/src/app.scss'
 				}
 			}
 		},
@@ -103,41 +107,41 @@ module.exports = function(grunt) {
 		},
 
 		watch: {
+			options: {
+				livereload: true
+			},
 			markup: {
-				files: ['*.php'],
-				options: {
-					livereload: true,
-				}
+				files: ["*.php"],
 			},
 			scss: {
-				files: ["assets/css/src/*.scss"],
-				tasks: ["compass"],
 				options: {
-					livereload: true,
-					files: ['**/*']
-				}
+					livereload: false
+				},
+				files: ["assets/css/src/*.scss"],
+				tasks: ["sass", "autoprefixer"]
+			},
+			css : {
+				files: ["assets/css/build/*.css"],
+				tasks: []
 			},
 			js: {
 				files: ["assets/js/src/*.js"],
-				tasks: ["copy", "jshint", "concat", "uglify"],
-				options: {
-					livereload: true,
-					files: ['**/*']
-				}
+				tasks: ["jshint", "concat", "uglify"]
 			}
 		}
 
 	});
 
 	// Load grunt tasks from NPM packages
-	grunt.loadNpmTasks("grunt-contrib-compass");
+	grunt.loadNpmTasks("grunt-autoprefixer");
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks("grunt-contrib-sass");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 
 	// Register grunt tasks
-	grunt.registerTask("default", ["compass", "copy", "concat", "jshint", "uglify"]);
+	grunt.registerTask("default", ["sass", "autoprefixer", "copy", "concat", "jshint", "uglify"]);
 
 };

@@ -9,7 +9,7 @@ Extremely flexible, easy to customize and adheres to WordPress coding standards 
 * Make sure you have the following installed:
     * [Bower](http://bower.io)
     * [Grunt](http://gruntjs.com/)
-    * [Compass](http://compass-style.org/)
+    * [SASS](http://sass-lang.com/)
 * In your terminal, visit `basey` inside of your theme directory and run the following:
     * `bower install`
     * `npm install`
