@@ -3,6 +3,11 @@
 locate_template( 'templates/header.php', true, true );
 
 	get_template_part('templates/page', 'header');
+
+	echo '<h1 class="entry-title">';
+		basey_title();
+	echo '</h1>';
+
 	// start loop
 	while ( have_posts() ) : the_post();
 

@@ -9,6 +9,7 @@
     "respond": "*",
     "REM-unit-polyfill": "*",
 
-    "parsleyjs": "1.2.*"
+    "parsleyjs": "1.2.*",
+    "jquery.smooth-scroll": "1.4.*"
   }
 }

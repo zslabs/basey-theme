@@ -1,4 +1,81 @@
 /**
+ * WordPress Core
+ */
+ /* =WordPress Core
+ -------------------------------------------------------------- */
+.alignnone {
+	margin: rem-calc(5px 15px 15px 0);
+}
+
+.aligncenter {
+	display: block;
+	margin: rem-calc(5px) auto rem-calc(5px) auto;
+}
+
+.alignright {
+	float:right;
+	margin: rem-calc(5px 0 15px 15px);
+}
+
+.alignleft {
+	float: left;
+		margin: rem-calc(5px 15px 15px 0);
+}
+
+.aligncenter {
+	display: block;
+	margin: rem-calc(5px) auto rem-calc(5px) auto;
+}
+
+a {
+
+	img {
+
+		&.alignright {
+			float: right;
+			margin: rem-calc(5px 0 15px 15px);
+		}
+
+		&.alignnone {
+			margin: rem-calc(5px 15px 15px 0);
+		}
+
+		&.alignleft {
+			float: left;
+			margin: rem-calc(5px 15px 15px 0);
+		}
+
+		&.aligncenter {
+			display: block;
+			margin-left: auto;
+			margin-right: auto
+		}
+	}
+}
+
+.wp-caption {
+	@include panel($panel-bg, $padding:rem-calc(5px));
+	text-align: center;
+
+	&.alignnone {
+		margin: rem-calc(5px 15px 15px 0);
+	}
+
+	&.alignleft {
+		margin: rem-calc(5px 15px 15px 0);
+	}
+
+	&.alignright {
+		margin: rem-calc(5px 0 15px 15px);
+	}
+
+	figcaption {
+		font-size: rem-calc(14px);
+		margin-top: rem-calc(5px);
+	}
+}
+
+/**
  * Article list
  */
 article.post {
@@ -42,6 +119,7 @@ article.post {
  * Comments
  */
 #comments {
+	clear:both;
 	@extend .clearfix;
 }
 .comment-list {
@@ -63,6 +141,7 @@ article.post {
 
 	.comment-header {
 		@include panel($panel-bg, $padding:rem-calc(10px));
+		clear:both;
 		@extend .clearfix;
 	}
 
@@ -90,15 +169,16 @@ article.post {
  */
 ul.page-numbers {
 	@extend .pagination;
-	@extend .clearfix;
 	margin-top: rem-calc(30px);
 	padding-top: rem-calc(30px);
 	border-top: 1px solid $panel-border-color;
 	margin-bottom: 0;
+	height: auto;
 }
 ul.pagination {
 	margin-bottom: 0;
 	@extend .clearfix;
+	height: auto;
 
 	li:empty {
 		display: none;
@@ -112,6 +192,21 @@ ul.pagination {
 
 	+ .gallery-row {
 		margin-top: ($column-gutter / 2);
+	}
+}
+
+/**
+ * Search Results
+ */
+.search-results {
+
+	.post-type + .post-type {
+		margin-top: rem-calc(30px);
+	}
+
+	.search-back {
+		clear:both;
+		@extend .clearfix;
 	}
 }
 

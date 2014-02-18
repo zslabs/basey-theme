@@ -88,6 +88,7 @@ module.exports = function(grunt) {
 					"bower_components/foundation/js/foundation/foundation.topbar.js",
 					// Custom Vendor
 					"bower_components/parsleyjs/dist/parsley.min.js",
+					"bower_components/jquery.smooth-scroll/jquery.smooth-scroll.min.js",
 					// Project
 					"assets/js/src/_init.js"
 

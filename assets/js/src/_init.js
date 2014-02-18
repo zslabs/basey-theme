@@ -7,9 +7,20 @@
 	$(document).foundation();
 
 	/**
+	 * Smooth Scroll
+	 */
+	$('a.scroll').click(function(event) {
+		event.preventDefault();
+		var link = this;
+		$.smoothScroll({
+			scrollTarget: link.hash
+		});
+	});
+
+	/**
 	 * Parsley
 	 */
-	$( 'form' ).parsley( 'addListener', {
+	$( 'form[parsley-validate]' ).parsley( 'addListener', {
 		onFieldValidate: function ( elem ) {
 
 			// if field is not visible, do not apply Parsley validation!

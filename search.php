@@ -4,6 +4,11 @@ locate_template( 'templates/header.php', true, true );
 	$results = array();
 
 	get_template_part('templates/page', 'header');
+
+	echo '<h1 class="entry-title">';
+		basey_title();
+	echo '</h1>';
+
 	if ( have_posts() ) {
 
 		while ( have_posts() ) {
@@ -18,7 +23,7 @@ locate_template( 'templates/header.php', true, true );
 		}
 
 		// DEBUG: Prints out current search results
-		//print_r( $results);
+		// print_r( $results);
 
 		// generates anchor links for each term/post type found
 		if( !isset( $_GET['post_type'] ) && !empty( $results ) ) {
@@ -29,7 +34,7 @@ locate_template( 'templates/header.php', true, true );
 					$count = count( $post_type['ids'] );
 					$post_type_name = $post_type['name'];
 					$post_type_name = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
-					echo '<dd class="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#%1$s">%2$s %3$s found</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</dd>';
+					echo '<dd class="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#post-type-%1$s">%2$s %3$s found</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</dd>';
 				}
 			}
 			echo '</dl>';
@@ -42,15 +47,21 @@ locate_template( 'templates/header.php', true, true );
 				$post_type_name = $post_type['name'];
 
 				// container around each post type for proper anchors
-				echo '<section class="post-type" id="' . $post_type_name . '">';
+				echo '<section class="post-type" id="post-type-' . $post_type_name . '">';
 
 				// count number of posts available
 				$count = count( $post_type['ids'] );
 				if( !isset( $_GET['post_type'] ) ) {
-					$post_type_label = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
-					echo '<h2>' . sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ) . '</h2>';
-					echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a>' : '' );
-				}
+					$post_type_label = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) ); ?>
+					<div class="row">
+						<div class="small-9 columns">
+							<h3><?php echo sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ); ?></h3>
+						</div>
+						<div class="small-3 columns text-right">
+							<?php echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a>' : '' ); ?>
+						</div>
+					</div>
+				<?php }
 
 				$i = 0;
 				foreach ( $post_type['ids'] as $post) {
@@ -92,6 +103,6 @@ locate_template( 'templates/header.php', true, true );
 	}
 
 	if(isset( $_GET['post_type'] ) ) {
-		echo '<p><a href="' . get_search_link() . '">' . __( '&larr; Back to search results', 'basey' ) . '</a></p>';
+		echo '<div class="search-back mt"><a class="button" href="' . get_search_link() . '">' . __( '&larr; Back to search results', 'basey' ) . '</a></div>';
 	}
 locate_template( 'templates/footer.php', true, true );

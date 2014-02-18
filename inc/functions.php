@@ -76,7 +76,7 @@ function main_nav_fb() {
  */
 function basey_no_results() { ?>
 
-	<div class="alert">
+	<div data-alert class="alert-box alert">
 		<?php _e('Sorry, no results were found.', 'basey'); ?>
 	</div>
 	<?php get_search_form(); ?>
@@ -125,6 +125,46 @@ function basey_page_nav() {
 	);
 	wp_link_pages( $args );
 }
+
+/**
+ * Adjust captions to not include width inline
+ * @param  string $output
+ * @param  array $attr
+ * @param  strin $content
+ * @return string
+ */
+function basey_caption($output, $attr, $content) {
+	if (is_feed()) {
+		return $output;
+}
+
+	$defaults = array(
+		'id' => '',
+		'align' => 'alignnone',
+		'width' => '',
+		'caption' => ''
+	);
+
+	$attr = shortcode_atts($defaults, $attr);
+
+	// If the width is less than 1 or there is no caption, return the content wrapped between the [caption] tags
+	if (1 > $attr['width'] || empty($attr['caption'])) {
+		return $content;
+	}
+
+	// Set up the attributes for the caption <figure>
+	$attributes  = (!empty($attr['id']) ? ' id="' . esc_attr($attr['id']) . '"' : '' );
+	$attributes .= ' class="thumbnail wp-caption ' . esc_attr($attr['align']) . '"';
+
+	$output  = '<figure' . $attributes .'>';
+	$output .= do_shortcode($content);
+	$output .= '<figcaption class="caption wp-caption-text">' . $attr['caption'] . '</figcaption>';
+	$output .= '</figure>';
+
+	return $output;
+}
+
+add_filter('img_caption_shortcode', 'basey_caption', 10, 3);
 
 /**
  * Returns page titles based on context
