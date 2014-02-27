@@ -41,6 +41,17 @@ module.exports = function(grunt) {
 			}
 		},
 
+		pixrem: {
+			options: {
+				rootvalue: '16px',
+				replace: true
+			},
+			dist: {
+				src: 'assets/css/build/app.css',
+				dest: 'assets/css/build/rem-fallback.css'
+			}
+		},
+
 		copy: {
 			main: {
 				files: [
@@ -56,8 +67,7 @@ module.exports = function(grunt) {
 				},
 				src: [
 					"bower_components/selectivizr/selectivizr.js",
-					"bower_components/respond/dest/respond.min.js",
-					"bower_components/REM-unit-polyfill/js/rem.js"
+					"bower_components/respond/dest/respond.min.js"
 				],
 				dest: "assets/js/build/ie.min.js"
 			},
@@ -119,7 +129,7 @@ module.exports = function(grunt) {
 					livereload: false
 				},
 				files: ["assets/css/src/*.scss"],
-				tasks: ["sass", "autoprefixer"]
+				tasks: ["sass", "autoprefixer", "pixrem"]
 			},
 			css : {
 				files: ["assets/css/build/*.css"],
@@ -138,11 +148,12 @@ module.exports = function(grunt) {
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
+	grunt.loadNpmTasks('grunt-pixrem');
 	grunt.loadNpmTasks("grunt-contrib-sass");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 
 	// Register grunt tasks
-	grunt.registerTask("default", ["sass", "autoprefixer", "copy", "concat", "jshint", "uglify"]);
+	grunt.registerTask("default", ["sass", "autoprefixer", "pixrem", "copy", "concat", "jshint", "uglify"]);
 
 };
