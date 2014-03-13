@@ -1,5 +1,7 @@
 # Basey
 
+[![Built with Grunt](https://cdn.gruntjs.com/builtwith.png)](http://gruntjs.com/)
+
 Basey is a developer-friendly WordPress base (or parent) theme built with [Foundation](https://github.com/zurb/foundation).
 
 Extremely flexible, easy to customize and adheres to WordPress coding standards for a friendlier theming experience.
