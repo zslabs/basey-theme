@@ -1,4 +1,26 @@
 /**
+ * General
+ */
+
+// Image replacement
+%ir {
+	background-color: transparent;
+	border: 0;
+	overflow: hidden;
+
+	&:before {
+		content: "";
+		display: block;
+		width: 0;
+		height: 150%;
+	}
+}
+
+figure {
+	margin: 0;
+}
+
+/**
  * Classes
  */
 .block {

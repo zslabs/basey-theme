@@ -213,12 +213,15 @@ ul.pagination {
 /**
  * Parsley
  */
-.parsley-error-list {
+.parsley-errors-list {
 	list-style: none;
 	background:$alert-color;
 	color:#fff;
-	padding:$form-spacing / 2;
 	font-size:rem-calc(14px);
-	margin-left: 0;
-	margin-top:-$form-spacing;
+	margin: 0;
+
+	&.filled {
+		padding:$form-spacing / 2;
+		margin: -$form-spacing 0 $form-spacing 0;
+	}
 }

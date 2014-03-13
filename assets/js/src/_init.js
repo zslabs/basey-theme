@@ -7,6 +7,11 @@
 	$(document).foundation();
 
 	/**
+	 * Placeholder
+	 */
+	$('[placeholder]').placeholder();
+
+	/**
 	 * Smooth Scroll
 	 */
 	$('a.scroll').click(function(event) {
@@ -16,21 +21,6 @@
 			scrollTarget: link.hash
 		});
 	});
-
-	/**
-	 * Parsley
-	 */
-	$( 'form[parsley-validate]' ).parsley( 'addListener', {
-		onFieldValidate: function ( elem ) {
-
-			// if field is not visible, do not apply Parsley validation!
-			if ( !$( elem ).is( ':visible' ) ) {
-				return true;
-			}
-
-			return false;
-		}
-	} );
 
 	/**
 	 * WordPress
