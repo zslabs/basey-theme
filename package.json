@@ -1,13 +1,13 @@
 {
   "devDependencies": {
-    "grunt": "~0.4.2",
-    "grunt-contrib-copy": "~0.4.1",
+    "grunt": "~0.4.4",
+    "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
-    "grunt-contrib-jshint": "~0.7.2",
-    "grunt-contrib-uglify": "~0.2.7",
-    "grunt-contrib-watch": "~0.5.3",
-    "grunt-autoprefixer": "~0.6.5",
-    "grunt-contrib-sass": "~0.7.2",
+    "grunt-contrib-jshint": "~0.9.2",
+    "grunt-contrib-uglify": "~0.4.0",
+    "grunt-contrib-watch": "~0.6.1",
+    "grunt-autoprefixer": "~0.7.2",
+    "grunt-contrib-sass": "~0.7.3",
     "grunt-pixrem": "~0.1.1"
   }
 }
