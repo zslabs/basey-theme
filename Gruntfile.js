@@ -77,8 +77,8 @@ module.exports = function(grunt) {
 				},
 				src: [
 					// Foundation Vendor
-					"bower_components/foundation/js/vendor/fastclick.js",
-					"bower_components/foundation/js/vendor/placeholder.js",
+					"bower_components/fastclick/lib/fastclick.js",
+					"bower_components/jquery-placeholder/jquery.placeholder.js",
 					// Foundation Core
 					"bower_components/foundation/js/foundation/foundation.js",
 					"bower_components/foundation/js/foundation/foundation.abide.js",

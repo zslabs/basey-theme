@@ -149,6 +149,7 @@ article.post {
 		display: block;
 		float:left;
 		margin-right: rem-calc(10px);
+		border-radius: 50%;
 	}
 
 	.comment-meta {
@@ -223,5 +224,9 @@ ul.pagination {
 	&.filled {
 		padding:$form-spacing / 2;
 		margin: -$form-spacing 0 $form-spacing 0;
+	}
+
+	li {
+		margin-bottom: 0;
 	}
 }

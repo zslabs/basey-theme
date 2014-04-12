@@ -73,7 +73,7 @@ add_action('template_redirect', 'basey_nice_search_redirect');
  * @link http://core.trac.wordpress.org/ticket/11330
  */
 function basey_request_filter($query_vars) {
-	if (isset($_GET['s']) && empty($_GET['s'])) {
+	if (isset($_GET['s']) && empty($_GET['s']) && !is_admin()) {
 		$query_vars['s'] = ' ';
 	}
 

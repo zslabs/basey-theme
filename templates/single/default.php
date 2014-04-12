@@ -2,7 +2,7 @@
 	<?php do_action( 'basey_post_inside_before' ); ?>
 
 	<header>
-		<h1 class="entry-title"><?php the_title(); ?></h1>
+		<h2 class="entry-title"><?php the_title(); ?></h2>
 	</header>
 	<div class="entry-content">
 		<?php the_content(); ?>

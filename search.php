@@ -5,9 +5,9 @@ locate_template( 'templates/header.php', true, true );
 
 	get_template_part('templates/page', 'header');
 
-	echo '<h1 class="entry-title">';
+	echo '<h2 class="entry-title">';
 		basey_title();
-	echo '</h1>';
+	echo '</h2>';
 
 	if ( have_posts() ) {
 
@@ -27,17 +27,18 @@ locate_template( 'templates/header.php', true, true );
 
 		// generates anchor links for each term/post type found
 		if( !isset( $_GET['post_type'] ) && !empty( $results ) ) {
-			echo '<dl class="sub-nav">';
-			if ( !empty( $results['post_types'] ) ) {
-				echo '<dt>Post Types:</dt>';
-				foreach ( $results['post_types'] as $post_type) {
-					$count = count( $post_type['ids'] );
-					$post_type_name = $post_type['name'];
-					$post_type_name = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
-					echo '<dd class="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#post-type-%1$s">%2$s %3$s found</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</dd>';
+			echo '<div data-magellan-expedition="fixed">';
+				echo '<dl class="sub-nav">';
+				if ( !empty( $results['post_types'] ) ) {
+					foreach ( $results['post_types'] as $post_type) {
+						$count = count( $post_type['ids'] );
+						$post_type_name = $post_type['name'];
+						$post_type_name = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
+						echo '<dd data-magellan-arrival="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#post-type-%1$s">%2$s %3$s</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</dd>';
+					}
 				}
-			}
-			echo '</dl>';
+				echo '</dl>';
+			echo '</div>';
 		}
 
 		// if post types are not empty, print each section and ultimately the posts within them out
@@ -47,20 +48,13 @@ locate_template( 'templates/header.php', true, true );
 				$post_type_name = $post_type['name'];
 
 				// container around each post type for proper anchors
-				echo '<section class="post-type" id="post-type-' . $post_type_name . '">';
+				echo '<section data-magellan-destination="' . $post_type_name . '" class="post-type" id="post-type-' . $post_type_name . '">';
 
 				// count number of posts available
 				$count = count( $post_type['ids'] );
 				if( !isset( $_GET['post_type'] ) ) {
 					$post_type_label = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) ); ?>
-					<div class="row">
-						<div class="small-9 columns">
-							<h3><?php echo sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ); ?></h3>
-						</div>
-						<div class="small-3 columns text-right">
-							<?php echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a>' : '' ); ?>
-						</div>
-					</div>
+					<h3><?php echo sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ); ?> <?php echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<small><a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a></small>' : '' ); ?></h3>
 				<?php }
 
 				$i = 0;

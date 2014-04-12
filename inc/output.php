@@ -35,7 +35,7 @@ function basey_head_output() { ?>
 add_action( 'basey_head', 'basey_head_output' );
 
 /**
- * Before content content
+ * Before content
  * @return void
  */
 function basey_content_before_output() { ?>
@@ -47,7 +47,7 @@ function basey_content_before_output() { ?>
 add_action( 'basey_content_before', 'basey_content_before_output' );
 
 /**
- * After content content
+ * After content
  * @return void
  */
 function basey_content_after_output() { ?>

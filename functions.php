@@ -5,7 +5,7 @@
  */
 
 if ( !defined( 'BASEY_VER' ) ) {
-	define( 'BASEY_VER', '5.2.2' );
+	define( 'BASEY_VER', '5.2.3' );
 }
 
 locate_template( '/inc/assets.php', true, true );
