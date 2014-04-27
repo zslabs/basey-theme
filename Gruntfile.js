@@ -8,16 +8,6 @@ module.exports = function(grunt) {
 
 		pkg: pkginfo,
 
-		jshint: {
-			src: {
-				options: {
-					jshintrc: ".jshintrc",
-					ignores: ["assets/js/build/*.js", "assets/js/vendor/*.js"]
-				},
-				src: ["assets/js/src/*.js"]
-			}
-		},
-
 		sass: {
 			dist: {
 				options: {
@@ -48,7 +38,15 @@ module.exports = function(grunt) {
 			},
 			dist: {
 				src: 'assets/css/build/app.css',
-				dest: 'assets/css/build/rem-fallback.css'
+				dest: 'assets/css/build/app.css'
+			}
+		},
+
+		csso: {
+			compress: {
+				files: {
+					'assets/css/build/app.css': ['assets/css/build/app.css']
+				}
 			}
 		},
 
@@ -57,6 +55,17 @@ module.exports = function(grunt) {
 				files: [
 					{expand: true, flatten: true, src: ['bower_components/modernizr/modernizr.js'], dest: 'assets/js/vendor/', filter: 'isFile'}
 				]
+			}
+		},
+
+		jshint: {
+			src: {
+				options: {
+					jshintrc: ".jshintrc",
+					ignores: ["assets/js/build/*.js", "assets/js/vendor/*.js"],
+            		reporter: require('jshint-stylish')
+				},
+				src: ["assets/js/src/*.js"]
 			}
 		},
 
@@ -121,21 +130,31 @@ module.exports = function(grunt) {
 			options: {
 				livereload: true
 			},
+			grunt: {
+				options: {
+					reload: true,
+				},
+				files: ['Gruntfile.js'],
+			},
 			markup: {
 				files: ["*.php"],
 			},
 			scss: {
 				options: {
-					livereload: false
+					livereload: false,
+					spawn: false
 				},
 				files: ["assets/css/src/*.scss"],
-				tasks: ["sass", "autoprefixer", "pixrem"]
+				tasks: ["sass", "autoprefixer", "pixrem", "csso"]
 			},
 			css : {
 				files: ["assets/css/build/*.css"],
 				tasks: []
 			},
 			js: {
+				options: {
+					spawn: false
+				},
 				files: ["assets/js/src/*.js"],
 				tasks: ["jshint", "concat", "uglify"]
 			}
@@ -144,16 +163,17 @@ module.exports = function(grunt) {
 	});
 
 	// Load grunt tasks from NPM packages
-	grunt.loadNpmTasks("grunt-autoprefixer");
+	grunt.loadNpmTasks('grunt-autoprefixer');
+	grunt.loadNpmTasks("grunt-contrib-sass");
+	grunt.loadNpmTasks('grunt-pixrem');
+	grunt.loadNpmTasks('grunt-csso');
 	grunt.loadNpmTasks("grunt-contrib-copy");
 	grunt.loadNpmTasks("grunt-contrib-concat");
 	grunt.loadNpmTasks("grunt-contrib-jshint");
-	grunt.loadNpmTasks('grunt-pixrem');
-	grunt.loadNpmTasks("grunt-contrib-sass");
 	grunt.loadNpmTasks("grunt-contrib-uglify");
 	grunt.loadNpmTasks("grunt-contrib-watch");
 
 	// Register grunt tasks
-	grunt.registerTask("default", ["sass", "autoprefixer", "pixrem", "copy", "concat", "jshint", "uglify"]);
+	grunt.registerTask("default", ["sass", "autoprefixer", "pixrem", "csso", "copy", "concat", "jshint", "uglify"]);
 
 };

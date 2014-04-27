@@ -2,8 +2,10 @@
 @charset "UTF-8";
 
 @import "settings";
-@import "_deck.scss";
 @import "normalize";
+
+// BASE PROJECT INCLUDE TO OVERRIDE FOUNDATION VARIABLES
+@import "_deck.scss";
 
 // Behold, here are all the Foundation components.
 @import "foundation/components/accordion";
@@ -45,4 +47,5 @@
 // Project
 @import
   "_wordpress.scss",
+  "_defaults.scss",
   "_global.scss";

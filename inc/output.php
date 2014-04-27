@@ -40,8 +40,8 @@ add_action( 'basey_head', 'basey_head_output' );
  */
 function basey_content_before_output() { ?>
 	<section class="block">
-		<div class="row">
-			<div class="large-8 columns">
+		<div class="row" data-grid-row>
+			<div class="large-8 columns" data-grid-column>
 			<?php
 }
 add_action( 'basey_content_before', 'basey_content_before_output' );
@@ -53,7 +53,7 @@ add_action( 'basey_content_before', 'basey_content_before_output' );
 function basey_content_after_output() { ?>
 
 			</div>
-			<div class="large-4 columns">
+			<div class="large-4 columns" data-grid-column>
 				<div class="panel">
 					<?php dynamic_sidebar( 'basey-sidebar' ); ?>
 				</div>
