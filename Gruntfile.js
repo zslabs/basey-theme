@@ -1,8 +1,11 @@
+var timer = require("grunt-timer");
+
 module.exports = function(grunt) {
 
 	"use strict";
 
 	var pkginfo = grunt.file.readJSON("package.json");
+	timer.init(grunt);
 
 	grunt.initConfig({
 
@@ -50,20 +53,69 @@ module.exports = function(grunt) {
 			}
 		},
 
-		copy: {
-			main: {
-				files: [
-					{expand: true, flatten: true, src: ['bower_components/modernizr/modernizr.js'], dest: 'assets/js/vendor/', filter: 'isFile'}
-				]
+		modernizr: {
+
+			dist: {
+				// [REQUIRED] Path to the build you're using for development.
+				"devFile" : "bower_components/modernizr/modernizr.js",
+
+				// [REQUIRED] Path to save out the built file.
+				"outputFile" : "assets/js/build/vendor/modernizr.js",
+
+				// Based on default settings on http://modernizr.com/download/
+				"extra" : {
+					"shiv" : true,
+					"printshiv" : false,
+					"load" : true,
+					"mq" : false,
+					"cssclasses" : true,
+					"svg" : true
+				},
+
+				// Based on default settings on http://modernizr.com/download/
+				"extensibility" : {
+					"addtest" : false,
+					"prefixed" : false,
+					"teststyles" : false,
+					"testprops" : false,
+					"testallprops" : false,
+					"hasevents" : false,
+					"prefixes" : false,
+					"domprefixes" : false
+				},
+
+				// By default, source is uglified before saving
+				"uglify" : true,
+
+				// Define any tests you want to implicitly include.
+				"tests" : [],
+
+				// By default, this task will crawl your project for references to Modernizr tests.
+				// Set to false to disable.
+				"parseFiles" : true,
+
+				// When parseFiles = true, this task will crawl all *.js, *.css, *.scss files, except files that are in node_modules/.
+				// You can override this by defining a "files" array below.
+				// "files" : {
+					// "src": []
+				// },
+
+				// When parseFiles = true, matchCommunityTests = true will attempt to
+				// match user-contributed tests.
+				"matchCommunityTests" : false,
+
+				// Have custom Modernizr tests? Add paths to their location here.
+				"customTests" : []
 			}
+
 		},
 
 		jshint: {
 			src: {
 				options: {
 					jshintrc: ".jshintrc",
-					ignores: ["assets/js/build/*.js", "assets/js/vendor/*.js"],
-            		reporter: require('jshint-stylish')
+					ignores: ["assets/js/build/**/*.js", "assets/js/src/vendor/*.js"],
+					reporter: require('jshint-stylish')
 				},
 				src: ["assets/js/src/*.js"]
 			}
@@ -120,8 +172,7 @@ module.exports = function(grunt) {
 			min: {
 				files: {
 					"assets/js/build/scripts.min.js": ["assets/js/build/scripts.min.js"],
-					"assets/js/build/ie.min.js": ["assets/js/build/ie.min.js"],
-					"assets/js/vendor/modernizr.js": ["assets/js/vendor/modernizr.js"]
+					"assets/js/build/ie.min.js": ["assets/js/build/ie.min.js"]
 				}
 			}
 		},
@@ -162,18 +213,12 @@ module.exports = function(grunt) {
 
 	});
 
-	// Load grunt tasks from NPM packages
-	grunt.loadNpmTasks('grunt-autoprefixer');
-	grunt.loadNpmTasks("grunt-contrib-sass");
-	grunt.loadNpmTasks('grunt-pixrem');
-	grunt.loadNpmTasks('grunt-csso');
-	grunt.loadNpmTasks("grunt-contrib-copy");
-	grunt.loadNpmTasks("grunt-contrib-concat");
-	grunt.loadNpmTasks("grunt-contrib-jshint");
-	grunt.loadNpmTasks("grunt-contrib-uglify");
-	grunt.loadNpmTasks("grunt-contrib-watch");
+	// Load Grunt Tasks
+	require('jit-grunt')(grunt);
 
-	// Register grunt tasks
-	grunt.registerTask("default", ["sass", "autoprefixer", "pixrem", "csso", "copy", "concat", "jshint", "uglify"]);
+	// Register Grunt Tasks
+	grunt.registerTask("default", ["sass", "autoprefixer", "pixrem", "csso", "modernizr", "concat", "jshint", "uglify"]);
+	grunt.registerTask("styles", ["sass", "autoprefixer", "pixrem", "csso"]);
+	grunt.registerTask("js", ["modernizr", "concat", "jshint", "uglify"]);
 
 };

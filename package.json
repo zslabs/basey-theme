@@ -1,7 +1,6 @@
 {
   "devDependencies": {
     "grunt": "^0.4.4",
-    "grunt-contrib-copy": "~0.5.0",
     "grunt-contrib-concat": "~0.3.0",
     "grunt-contrib-jshint": "~0.9.2",
     "grunt-contrib-uglify": "~0.4.0",
@@ -10,6 +9,9 @@
     "grunt-contrib-sass": "~0.7.3",
     "grunt-pixrem": "^0.1.2",
     "grunt-csso": "^0.6.1",
-    "jshint-stylish": "^0.1.5"
+    "jshint-stylish": "^0.1.5",
+    "grunt-modernizr": "^0.5.2",
+    "grunt-timer": "^0.5.0",
+    "jit-grunt": "^0.6.0"
   }
 }

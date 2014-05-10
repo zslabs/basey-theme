@@ -14,7 +14,7 @@ add_action( 'wp_enqueue_scripts', 'basey_styles', 12 );
  * @return void
  */
 function basey_enqueue_modernizr() {
-	wp_enqueue_script( 'basey-modernizr', get_template_directory_uri() . '/assets/js/vendor/modernizr.js', '', BASEY_VER, false );
+	wp_enqueue_script( 'basey-modernizr', get_template_directory_uri() . '/assets/js/build/vendor/modernizr.js', '', BASEY_VER, false );
 }
 add_action( 'wp_enqueue_scripts', 'basey_enqueue_modernizr', 8 );
 
