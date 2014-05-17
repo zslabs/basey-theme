@@ -16,11 +16,14 @@
 	 * Calculates if columns are stacked for proper vertical spacing
 	 */
 	function baseyGridSpacing() {
-		var isStacked = false,
-			$gridRow = $('[data-grid-row]'),
-			vals = $gridRow.find('[data-grid-column]:visible');
+		var isStacked = false;
 
-		if (vals.length === 0) return;
+		$.each($('[data-grid-row]'), function(index, val) {
+			var $gridRow = $(val),
+				vals = $gridRow.find('[data-grid-column]:visible');
+
+			if (vals.length === 0) return;
+
 			var firstTopOffset = vals.first().offset().top;
 			vals.each(function(){
 				var el = $(this);
@@ -31,6 +34,7 @@
 					$gridRow.removeClass('is-stacked');
 				}
 			});
+		});
 	}
 	baseyGridSpacing();
 
