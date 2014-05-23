@@ -64,9 +64,8 @@
 
 	// Fix HTML format around pagination links
 	// Foundation specific
-	$.each($('.pagination li:not(:empty):not(:has(>a)), .page-numbers li:not(:empty):not(:has(>a))'), function(index, val) {
-
-		$(val).addClass('current').wrapInner('<a></a>');
+	$.each($('.pagination li:not(:empty):not(:has(>a)) .current, .page-numbers li:not(:empty):not(:has(>a)) .current'), function(index, val) {
+		$(val).parent().addClass('current').wrapInner('<a></a>');
 	});
 
 }(jQuery));
