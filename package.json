@@ -12,6 +12,8 @@
     "jshint-stylish": "^0.1.5",
     "grunt-modernizr": "^0.5.2",
     "grunt-timer": "^0.5.0",
-    "jit-grunt": "^0.6.0"
+    "jit-grunt": "^0.6.0",
+    "grunt-contrib-imagemin": "^0.7.0",
+    "grunt-newer": "^0.7.0"
   }
 }
