@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Foundation version: 5.2.2
+ * Foundation version: 5.2.3
  */
 
 if ( !defined( 'BASEY_VER' ) ) {
