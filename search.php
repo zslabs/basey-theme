@@ -27,8 +27,6 @@ locate_template( 'templates/header.php', true, true );
 
 		// generates anchor links for each term/post type found
 		if( !isset( $_GET['post_type'] ) && !empty( $results['post_types'] ) ) {
-			$search_query = $_GET['s'];
-
 			echo '<ul id="search-nav" class="uk-subnav uk-subnav-pill">';
 				echo '<li><span>' . __('Filter Results', 'basey') . '</span>';
 				foreach ( $results['post_types'] as $post_type) {

@@ -30,7 +30,7 @@ add_filter( 'pre_get_posts', 'basey_search_size' ); // Hook our custom function 
  */
 function basey_get_post_type_count($post_type_name) {
 	global $wpdb;
-	$search_query = $_GET['s'];
+	$search_query = get_search_query();
 	$search_query_db = preg_replace('/[^a-zA-Z0-9.]/', '', $search_query);
 
 	$post_type_count = get_transient('basey_search_' . $post_type_name . '_' . $search_query_db );
