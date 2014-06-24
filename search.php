@@ -7,7 +7,7 @@
  * @return int
  */
 function basey_get_post_type_count($post_type_name) {
-
+	global $wpdb;
 	$search_query = $_GET['s'];
 
 	$post_type_count = get_transient('basey_search_' . $post_type_name . '_' . $search_query );
@@ -55,8 +55,6 @@ locate_template( 'templates/header.php', true, true );
 
 		// generates anchor links for each term/post type found
 		if( !isset( $_GET['post_type'] ) && !empty( $results['post_types'] ) ) {
-
-			global $wpdb;
 			$search_query = $_GET['s'];
 
 			echo '<ul id="search-nav" class="uk-subnav uk-subnav-pill">';

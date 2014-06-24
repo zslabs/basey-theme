@@ -19,6 +19,22 @@ class basey_primary_menu extends Walker_Nav_Menu {
 	}
 
 	/**
+	 * Ends the list of after the elements are added.
+	 *
+	 * @see Walker_Nav_Menu::end_lvl()
+	 *
+	 * @since 3.0.0
+	 *
+	 * @param string $output Passed by reference. Used to append additional content.
+	 * @param int    $depth  Depth of page. Used for padding.
+	 * @param array  $args   Not used.
+	 */
+	public function end_lvl( &$output, $depth = 0, $args = array() ) {
+		$indent = str_repeat( "\t", $depth );
+		$output .= "\n$indent</ul></div>";
+	}
+
+	/**
 	 * @see Walker::start_el()
 	 * @since 3.0.0
 	 *
