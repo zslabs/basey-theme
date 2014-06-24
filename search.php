@@ -1,33 +1,5 @@
 <?php
 
-/**
- * Retreives post count for specific search term and post type
- * Cached for one-hour
- * @param  string $post_type_name
- * @return int
- */
-function basey_get_post_type_count($post_type_name) {
-	global $wpdb;
-	$search_query = $_GET['s'];
-
-	$post_type_count = get_transient('basey_search_' . $post_type_name . '_' . $search_query );
-	if (false === $post_type_count) {
-
-		// Count number of "total" results returned for each post type
-		// This is independant of "posts_per_page"
-		$post_type_count = $wpdb->get_var("
-			SELECT COUNT(*) FROM $wpdb->posts
-			WHERE post_type='$post_type_name'
-			AND ( post_title LIKE '%$search_query%'
-			OR post_content LIKE '%$search_query%')
-		");
-
-		set_transient( 'basey_search_' . $post_type_name . '_' . $search_query, $post_type_count, 60 * 60 );
-	}
-
-	return $post_type_count;
-}
-
 locate_template( 'templates/header.php', true, true );
 	$results = array();
 
