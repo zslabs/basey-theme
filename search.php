@@ -1,11 +1,39 @@
 <?php
 
+/**
+ * Retreives post count for specific search term and post type
+ * Cached for one-hour
+ * @param  string $post_type_name
+ * @return int
+ */
+function basey_get_post_type_count($post_type_name) {
+
+	$search_query = $_GET['s'];
+
+	$post_type_count = get_transient('basey_search_' . $post_type_name . '_' . $search_query );
+	if (false === $post_type_count) {
+
+		// Count number of "total" results returned for each post type
+		// This is independant of "posts_per_page"
+		$post_type_count = $wpdb->get_var("
+			SELECT COUNT(*) FROM $wpdb->posts
+			WHERE post_type='$post_type_name'
+			AND ( post_title LIKE '%$search_query%'
+			OR post_content LIKE '%$search_query%')
+		");
+
+		set_transient( 'basey_search_' . $post_type_name . '_' . $search_query, $post_type_count, 60 * 60 );
+	}
+
+	return $post_type_count;
+}
+
 locate_template( 'templates/header.php', true, true );
 	$results = array();
 
 	get_template_part('templates/page', 'header');
 
-	echo '<h2 class="entry-title">';
+	echo '<h2 class="uk-article-title">';
 		basey_title();
 	echo '</h2>';
 
@@ -26,19 +54,24 @@ locate_template( 'templates/header.php', true, true );
 		// print_r( $results);
 
 		// generates anchor links for each term/post type found
-		if( !isset( $_GET['post_type'] ) && !empty( $results ) ) {
-			echo '<div data-magellan-expedition="fixed">';
-				echo '<dl class="sub-nav">';
-				if ( !empty( $results['post_types'] ) ) {
-					foreach ( $results['post_types'] as $post_type) {
-						$count = count( $post_type['ids'] );
-						$post_type_name = $post_type['name'];
-						$post_type_name = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
-						echo '<dd data-magellan-arrival="' . $post_type['name'] . '">' . sprintf(__( '<a class="scroll" href="#post-type-%1$s">%2$s %3$s</a>', 'basey' ), $post_type['name'], $count, $post_type_name) . '</dd>';
-					}
+		if( !isset( $_GET['post_type'] ) && !empty( $results['post_types'] ) ) {
+
+			global $wpdb;
+			$search_query = $_GET['s'];
+
+			echo '<ul id="search-nav" class="uk-subnav uk-subnav-pill">';
+				echo '<li><span>' . __('Filter Results', 'basey') . '</span>';
+				foreach ( $results['post_types'] as $post_type) {
+
+					$post_type_name = $post_type['name'];
+					$post_type_count = basey_get_post_type_count($post_type_name);
+
+					$post_type_name = ( $post_type_count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) );
+					echo '<li>' . sprintf(__( '<a href="#post-type-%1$s" data-uk-smooth-scroll>%2$s %3$s</a>', 'basey' ), $post_type['name'], $post_type_count, $post_type_name) . '</li>';
+
 				}
-				echo '</dl>';
-			echo '</div>';
+				echo '</li>';
+			echo '</ul>';
 		}
 
 		// if post types are not empty, print each section and ultimately the posts within them out
@@ -48,13 +81,18 @@ locate_template( 'templates/header.php', true, true );
 				$post_type_name = $post_type['name'];
 
 				// container around each post type for proper anchors
-				echo '<section data-magellan-destination="' . $post_type_name . '" class="post-type" id="post-type-' . $post_type_name . '">';
+				echo '<section class="post-type" id="post-type-' . $post_type_name . '">';
 
 				// count number of posts available
-				$count = count( $post_type['ids'] );
+				$post_type_count = basey_get_post_type_count($post_type_name);
 				if( !isset( $_GET['post_type'] ) ) {
-					$post_type_label = ( $count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) ); ?>
-					<h3><?php echo sprintf(__( '%1$s %2$s found', 'basey' ), $count, $post_type_label ); ?> <?php echo ( $count > apply_filters( 'basey_search_results_limit', 5 ) && ( !isset( $_GET['post_type'] ) ) ? '<small><a class="search-more-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . '</a></small>' : '' ); ?></h3>
+					$post_type_label = ( $post_type_count > 1 ? apply_filters( "basey_search_results_{$post_type_name}_plural", $post_type['plural'] ) : apply_filters( "basey_search_results_{$post_type_name}_single", $post_type['single'] ) ); ?>
+					<div class="uk-clearfix">
+						<div class="uk-float-left">
+							<h2><?php echo sprintf(__( '%1$s %2$s found', 'basey' ), $post_type_count, $post_type_label ); ?></h2>
+						</div>
+						<?php echo ( $post_type_count > apply_filters( 'basey_search_results_limit', get_option('posts_per_page') ) && ( !isset( $_GET['post_type'] ) ) ? '<div class="uk-float-right"><a class="uk-button" href="' . add_query_arg( 'post_type', $post_type_name) . '">' . __( 'More', 'basey' ) . ' <i class="uk-icon-ellipsis-h"></i></a></div>' : '' ); ?>
+					</div>
 				<?php }
 
 				$i = 0;
@@ -77,7 +115,7 @@ locate_template( 'templates/header.php', true, true );
 					}
 
 					if( !isset( $_GET['post_type'] ) ) {
-						if ( ++$i == apply_filters( 'basey_search_results_limit', 5 ) ) break;
+						if ( ++$i == apply_filters( 'basey_search_results_limit', get_option('posts_per_page') ) ) break;
 					}
 
 					wp_reset_postdata();
@@ -97,6 +135,6 @@ locate_template( 'templates/header.php', true, true );
 	}
 
 	if(isset( $_GET['post_type'] ) ) {
-		echo '<div class="search-back mt"><a class="button" href="' . get_search_link() . '">' . __( '&larr; Back to search results', 'basey' ) . '</a></div>';
+		echo '<div class="uk-clearfix"><a class="uk-button" href="' . get_search_link() . '">' . __( '<i class="uk-icon-angle-double-left"></i> Back to search results', 'basey' ) . '</a></div>';
 	}
 locate_template( 'templates/footer.php', true, true );

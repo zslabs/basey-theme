@@ -16,20 +16,25 @@ logic)
  * @return void
  */
 function basey_head_output() { ?>
-
-	<div class="contain-to-grid">
-		<nav class="top-bar" data-topbar>
-			<ul class="title-area">
-				<li class="name">
-					<h1><a href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a></h1>
-				</li>
-				<li class="toggle-topbar menu-icon"><a href="#"><span><?php _e('Menu', 'basey'); ?></span></a></li>
-			</ul>
-			<section class="top-bar-section">
-				<?php foundation_top_bar_l(); ?>
-			</section>
-		</nav>
-	</div>
+	<nav class="uk-navbar uk-navbar-attached">
+		<div class="uk-container">
+			<a class="uk-navbar-brand" href="<?php echo home_url(); ?>"><?php bloginfo('name'); ?></a>
+			<?php
+			wp_nav_menu( array(
+				'menu'              => 'primary',
+				'theme_location'    => 'primary',
+				'depth'             => 2,
+				'container'         => '',
+				'menu_class'        => 'uk-navbar-nav uk-hidden-small',
+				'fallback_cb'       => 'basey_primary_menu::fallback',
+				'walker'            => new basey_primary_menu())
+			);
+			?>
+			<div class="uk-navbar-flip uk-visible-small">
+				<a href="#offcanvas-menu" class="uk-navbar-toggle" data-uk-offcanvas></a>
+			</div>
+		</div>
+	</nav>
 	<?php
 }
 add_action( 'basey_head', 'basey_head_output' );
@@ -39,9 +44,10 @@ add_action( 'basey_head', 'basey_head_output' );
  * @return void
  */
 function basey_content_before_output() { ?>
-	<section class="block">
-		<div class="row" data-grid-row>
-			<div class="large-8 columns" data-grid-column>
+	<section class="uk-margin">
+		<div class="uk-container">
+			<div class="uk-grid" data-uk-grid-margin>
+				<div class="uk-width-medium-7-10">
 			<?php
 }
 add_action( 'basey_content_before', 'basey_content_before_output' );
@@ -52,14 +58,31 @@ add_action( 'basey_content_before', 'basey_content_before_output' );
  */
 function basey_content_after_output() { ?>
 
-			</div>
-			<div class="large-4 columns" data-grid-column>
-				<div class="panel">
-					<?php dynamic_sidebar( 'basey-sidebar' ); ?>
+				</div>
+				<div class="uk-width-medium-3-10">
+					<div class="uk-panel uk-panel-box">
+						<?php dynamic_sidebar( 'basey-sidebar' ); ?>
+					</div>
 				</div>
 			</div>
 		</div>
 	</section>
+	<div id="offcanvas-menu" class="uk-offcanvas">
+		<div class="uk-offcanvas-bar uk-offcanvas-bar-flip">
+			<?php
+			wp_nav_menu( array(
+				'menu'           => 'primary',
+				'theme_location' => 'primary',
+				'depth'          => 2,
+				'container'      => '',
+				'menu_class'     => 'uk-nav uk-nav-offcanvas uk-nav-parent-icon',
+				'items_wrap'     => '<ul id="%1$s" class="%2$s" data-uk-nav>%3$s</ul>',
+				'fallback_cb'    => 'basey_offcanvas_menu::fallback',
+				'walker'         => new basey_offcanvas_menu())
+			);
+			?>
+		</div>
+	</div>
 	<?php
 }
 add_action( 'basey_content_after', 'basey_content_after_output' );
@@ -72,15 +95,11 @@ add_action( 'basey_content_after', 'basey_content_after_output' );
 function basey_query_load_time() {
 
 	if (current_user_can( 'manage_options' )) { ?>
-		<footer id="bottom">
-			<div class="row">
-				<div class="small-12 columns">
-					<div class="panel">
-						<strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds
-					</div>
-				</div>
+		<div class="uk-container uk-margin-bottom">
+			<div class="uk-panel uk-panel-box">
+				<strong><?php echo get_num_queries(); ?></strong> queries in <strong><?php timer_stop(1); ?></strong> seconds
 			</div>
-		</footer>
+		</div>
 	<?php }
 }
 add_action( 'basey_debug', 'basey_query_load_time' );

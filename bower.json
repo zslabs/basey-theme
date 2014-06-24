@@ -3,12 +3,12 @@
   "version": "0.0.1",
   "private": "true",
   "dependencies": {
-    "foundation": "5.2.3",
+    "uikit": "2.7.*",
+
+    "fastclick": "1.*",
+    "jquery-placeholder": "2.*",
 
     "selectivizr": "*",
-    "respond": "*",
-
-    "parsleyjs": "2.*",
-    "jquery.smooth-scroll": "1.4.*"
+    "respond": "*"
   }
 }

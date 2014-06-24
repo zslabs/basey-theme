@@ -4,7 +4,7 @@ locate_template( 'templates/header.php', true, true );
 
 	get_template_part('templates/page', 'header');
 
-	echo '<h2 class="entry-title">';
+	echo '<h2 class="uk-article-title">';
 		basey_title();
 	echo '</h2>';
 

@@ -1,0 +1,56 @@
+/**
+ * WordPress Core
+ */
+.alignnone {
+	margin: 5px 15px 15px 0;
+}
+
+.aligncenter {
+	display: block;
+	margin: 5px auto 5px auto;
+}
+
+.alignright {
+	float:right;
+	margin: 5px 0 15px 15px;
+}
+
+.alignleft {
+	float: left;
+	margin: 5px 15px 15px 0;
+}
+
+.aligncenter {
+	display: block;
+	margin: 5px auto;
+}
+
+.wp-caption {
+	&:extend(.uk-thumbnail all);
+	text-align: center;
+
+	figcaption {
+		&:extend(.uk-thumbnail-caption all);
+	}
+}
+
+/**
+ * Article Listing
+ */
+.article-bottom p:last-child {
+	margin-bottom: 0;
+}
+
+/**
+ * Search
+ */
+.post-type + .post-type {
+	&:extend(.uk-margin-large-top);
+}
+
+/**
+ * Parsley
+ */
+.parsley-error-list {
+	&:extend(.uk-alert all, .uk-alert-warning all);
+}

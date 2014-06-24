@@ -1,22 +1,22 @@
-<article <?php post_class() ?> id="post-<?php the_ID(); ?>">
+<article <?php post_class('uk-article') ?> id="post-<?php the_ID(); ?>">
 	<?php do_action( 'basey_post_inside_before' ); ?>
 
 	<header>
-		<h2 class="entry-title"><?php the_title(); ?></h2>
-		<?php
+		<h2 class="uk-article-title"><?php the_title(); ?></h2>
+		<?php if (has_post_thumbnail()) : ?>
+			<?php
+			$width = get_option('thumbnail_size_w');
+			$height = get_option('thumbnail_size_h');
 
-		if (has_post_thumbnail()) { ?>
-			<figure class="post-thumbnail">
-				<?php the_post_thumbnail(); ?>
-			</figure>
-		<?php }
-		get_template_part('templates/partials/post-header'); ?>
+			the_post_thumbnail(array($width, $height), array('class' => ''));
+
+		endif; ?>
 	</header>
 	<div class="entry-content">
 		<?php the_content(); ?>
 	</div>
-	<?php basey_page_nav();
+	<?php
 
-	comments_template('/templates/comments.php');
+	get_template_part( 'templates/single/post-meta' );
 	do_action( 'basey_post_inside_after' ); ?>
 </article>

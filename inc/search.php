@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Change number of search results to show on page
+ * Change number of search results to show on page for segmented search
  * @param  array $query
  * @return array
  */
@@ -13,9 +13,10 @@ function basey_search_size( $query ) {
 	$output = 'names'; // names or objects, note names is the default
 	$operator = 'and'; // 'and' or 'or'
 	$post_types = get_post_types( $args, $output, $operator );
-	$count = count( $post_types);
-	if ( $query->is_search && $query->is_main_query() && !isset( $_GET['post_type'] ) /*&& $query->query_vars['post_type'] != 'nav_menu_item'*/) // Make sure it is a search page
-		$query->query_vars['posts_per_page'] = intval( get_option( 'posts_per_page' ) ) * $count; // Multiplies the setting for posts_page_page by the number of post types publicly queryable
+	$count = count( $post_types );
+	if ( $query->is_search && $query->is_main_query() && !isset( $_GET['post_type'] ) ) { // Make sure it is a search page
+		$query->query_vars['posts_per_page'] = get_option('posts_per_page') * $count;
+	}
 
 	return $query; // Return our modified query variables
 }
@@ -38,7 +39,7 @@ add_action( 'init', 'basey_page_query', 1 );
  * @return void
  */
 function basey_one_match_redirect() {
-	if (is_search() ) {
+	if (is_search() && !isset($_GET['post_type'])) {
 		global $wp_query;
 		if ( $wp_query->post_count == 1) {
 			wp_redirect( get_permalink( $wp_query->posts['0']->ID ) );
@@ -82,7 +83,9 @@ function basey_request_filter($query_vars) {
 add_filter('request', 'basey_request_filter');
 
 /**
- * Tell WordPress to use searchform.php from the templates/ directory. Requires WordPress 3.6+
+ * Tell WordPress to use searchform.php from the templates/ directory.
+ * @param  string $form
+ * @return string
  */
 function basey_get_search_form($form) {
 	$form = '';

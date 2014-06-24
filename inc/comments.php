@@ -7,7 +7,7 @@
 class Basey_Walker_Comment extends Walker_Comment {
 	function start_lvl(&$output, $depth = 0, $args = array()) {
 		$GLOBALS['comment_depth'] = $depth + 1; ?>
-		<ul <?php comment_class('nested comment-' . get_comment_ID()); ?>>
+		<ul <?php comment_class('comment-' . get_comment_ID()); ?>>
 		<?php
 	}
 
@@ -38,6 +38,6 @@ class Basey_Walker_Comment extends Walker_Comment {
 			call_user_func($args['end-callback'], $comment, $args, $depth);
 			return;
 		}
-		echo "</article></li>\n";
+		echo "</li>\n";
 	}
 }

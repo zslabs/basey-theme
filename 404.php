@@ -2,7 +2,7 @@
 
 locate_template( 'templates/header.php', true, true );
 	get_template_part( 'templates/page-header' ); ?>
-	<div data-alert class="alert-box alert">
+	<div class="uk-alert uk-alert-warning">
 		<?php _e('Sorry, but the page you were trying to view does not exist.', 'basey'); ?>
 	</div>
 	<p><?php _e( 'Please try the following:', 'basey' ); ?></p>

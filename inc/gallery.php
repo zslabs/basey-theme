@@ -49,8 +49,7 @@ function basey_gallery($attr) {
 	), $attr));
 
 	$id = intval($id);
-	$columns = (12 % $columns == 0) ? $columns: 4;
-	$grid = sprintf('small-%1$s large-%1$s columns', 12/$columns);
+	$grid = sprintf('uk-grid-width-medium-1-%1$s', $columns);
 
 	if ($order === 'RAND') {
 		$orderby = 'none';
@@ -84,22 +83,28 @@ function basey_gallery($attr) {
 	$unique = (get_query_var('page')) ? $instance . '-p' . get_query_var('page'): $instance;
 	$output = '<div class="gallery gallery-' . $id . '-' . $unique . '">';
 
+	$output .= '<ul class="uk-grid ' . $grid . '" data-uk-grid-margin>';
+
 	$i = 0;
 	foreach ($attachments as $id => $attachment) {
-		$image = ('file' == $link) ? wp_get_attachment_link($id, $size, false, false) : wp_get_attachment_link($id, $size, true, false);
-		$output .= ($i % $columns == 0) ? '<div class="row gallery-row">': '';
-		$output .= '<div class="' . $grid .'">' . $image;
 
-		if (trim($attachment->post_excerpt)) {
-			$output .= '<div class="caption hidden">' . wptexturize($attachment->post_excerpt) . '</div>';
-		}
+		$attachment_link = get_attachment_link($id);
+		$attachment_image = wp_get_attachment_image( $id, $size );
 
-		$output .= '</div>';
+		$output .= '<li class="uk-text-center">';
+			$output .= $link !== 'none' ? '<a class="uk-thumbnail uk-overlay-toggle" href="' . $attachment_link . '">' : '<div class="uk-thumbnail uk-overlay-toggle">';
+				$output .= '<figure class="uk-overlay uk-margin-remove">';
+					$output .= $attachment_image;
+					if (trim($attachment->post_excerpt)) {
+						$output .= '<figcaption class="uk-overlay-caption">' . wptexturize($attachment->post_excerpt) . '</figcaption>';
+					}
+				$output .= '</figure>';
+			$output .= $link !== 'none' ? '</a>' : '</div>';
+
+		$output .= '</li>';
 		$i++;
-		$output .= ($i % $columns == 0) ? '</div>' : '';
 	}
-
-	$output .= ($i % $columns != 0 ) ? '</div>' : '';
+	$output .= '</ul>';
 	$output .= '</div>';
 
 	return $output;
@@ -107,13 +112,3 @@ function basey_gallery($attr) {
 remove_shortcode('gallery');
 add_shortcode('gallery', 'basey_gallery');
 add_filter('use_default_gallery_style', '__return_null');
-
-/**
- * Add class="thumbnail img-thumbnail" to attachment items
- */
-function basey_attachment_link_class($html) {
-	$postid = get_the_ID();
-	$html = str_replace('<a', '<a class="th"', $html);
-	return $html;
-}
-add_filter('wp_get_attachment_link', 'basey_attachment_link_class', 10, 1);

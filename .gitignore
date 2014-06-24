@@ -8,7 +8,6 @@
 *.swp
 *.vi
 *~
-*.sass-cache
 /bower_components/*
 /node_modules/*
 
