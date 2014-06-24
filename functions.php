@@ -1,7 +1,8 @@
 <?php
 
 if ( !defined( 'BASEY_VER' ) ) {
-	define( 'BASEY_VER', '5.3' );
+	$basey_theme_object = wp_get_theme();
+	define( 'BASEY_VER', $basey_theme_object->version );
 }
 
 locate_template( '/inc/assets.php', true, true );
