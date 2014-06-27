@@ -1,0 +1,20 @@
+// Image Replacement
+.ir() {
+	background-color: transparent;
+	border: 0;
+	overflow: hidden;
+
+	&:before {
+		content: "";
+		display: block;
+		width: 0;
+		height: 150%;
+	}
+}
+
+// Set box-sizing globally to handle padding and border widths
+*,
+*:before,
+*:after {
+	box-sizing:border-box;
+}

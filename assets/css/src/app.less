@@ -1,7 +1,7 @@
 // UIkit
 // ========================================================================
 
-@import "uikit.less";
+@import "uikit/uikit.less";
 
 
 // Theme
@@ -53,13 +53,13 @@
 @import "bower_components/uikit/themes/default/gradient/text.less";
 @import "bower_components/uikit/themes/default/gradient/utility.less";
 
+// Project overrides for UIkit components
+@import "uikit/variables.less";
+@import "uikit/comment.less";
+@import "uikit/icon.less";
+@import "uikit/navbar.less";
+@import "uikit/utility.less";
+
 // Project
-@import "_defaults.less";
 @import "_wordpress.less";
 @import "_global.less";
-
-// Variables defined last for "last-win" scope
-@import "_variables.less";
-@import "comment.less";
-@import "icon.less";
-@import "utility.less";
