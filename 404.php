@@ -1,7 +1,9 @@
 <?php
 
-locate_template( 'templates/header.php', true, true );
-	get_template_part( 'templates/page-header' ); ?>
+locate_template( 'templates/header.php', true, true ); ?>
+	<header>
+		<h2 class="uk-article-title"><?php basey_title(); ?></h2>
+	</header>
 	<div class="uk-alert uk-alert-warning">
 		<?php _e('Sorry, but the page you were trying to view does not exist.', 'basey'); ?>
 	</div>
