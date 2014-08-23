@@ -1,7 +1,7 @@
 <article class="uk-comment">
 	<?php if ($comment->comment_approved == '0') : ?>
 		<div class="uk-alert uk-alert-warning">
-			<?php _e('Your comment is awaiting moderation.', 'basey'); ?>\
+			<?php _e('Your comment is awaiting moderation.', 'basey'); ?>
 		</div>
 	<?php endif; ?>
 	<header class="uk-comment-header">

@@ -3,8 +3,6 @@
 locate_template( 'templates/header.php', true, true );
 	$results = array();
 
-	get_template_part('templates/page', 'header');
-
 	echo '<h2 class="uk-article-title">';
 		basey_title();
 	echo '</h2>';

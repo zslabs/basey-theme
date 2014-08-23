@@ -51,7 +51,8 @@ gulp.task('scripts', function() {
   gulp.src([
       'bower_components/selectivizr/selectivizr.js',
       'bower_components/respond/dest/respond.min.js',
-      'assets/js/src/vendor/ecmascript-polyfill.js'
+      'assets/js/src/vendor/ecmascript-polyfill.js',
+      'assets/js/src/vendor/forEach-polyfill.js',
     ])
     .pipe(concat('ie.min.js'))
     .pipe(uglify())
@@ -84,6 +85,7 @@ gulp.task('scripts', function() {
 
       // UI Kit Add-ons
       "bower_components/uikit/src/js/addons/autocomplete.js",
+      "bower_components/uikit/src/js/addons/cover.js",
       "bower_components/uikit/src/js/addons/datepicker.js",
       "bower_components/uikit/src/js/addons/form-password.js",
       "bower_components/uikit/src/js/addons/form-select.js",
@@ -100,6 +102,7 @@ gulp.task('scripts', function() {
       // Vendor
       "bower_components/fastclick/lib/fastclick.js",
       "bower_components/jquery-placeholder/jquery.placeholder.js",
+      "bower_components/parsleyjs/dist/parsley.js",
 
       // Project
       'assets/js/src/_init.js'

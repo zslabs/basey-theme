@@ -3,10 +3,11 @@
   "version": "0.0.1",
   "private": "true",
   "dependencies": {
-    "uikit": "2.7.*",
+    "uikit": "2.9.*",
 
     "fastclick": "1.*",
     "jquery-placeholder": "2.*",
+    "parsleyjs": "2.*",
 
     "selectivizr": "*",
     "respond": "*"

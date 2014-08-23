@@ -51,6 +51,20 @@
 /**
  * Parsley
  */
-.parsley-error-list {
-	&:extend(.uk-alert all, .uk-alert-warning all);
+.parsley-errors-list {
+	display: none;
+	list-style:none;
+
+	&.filled {
+		display: block;
+	}
+
+	&:extend(.uk-alert all, .uk-alert-danger all);
+	margin-bottom: 0;
+}
+.parsley-custom-errors {
+
+	.parsley-errors-list.filled {
+		margin-top: @global-margin;
+	}
 }

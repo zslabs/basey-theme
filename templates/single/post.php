@@ -1,5 +1,8 @@
 <article <?php post_class('uk-article') ?> id="post-<?php the_ID(); ?>">
-	<?php do_action( 'basey_post_inside_before' ); ?>
+	<?php
+
+	do_action( 'basey_post_inside_before' );
+	apply_filters( 'basey_show_breadcrumbs', basey_breadcrumbs() ); ?>
 
 	<header>
 		<h2 class="uk-article-title"><?php the_title(); ?></h2>
