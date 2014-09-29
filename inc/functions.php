@@ -49,15 +49,17 @@ function basey_breadcrumbs() {
 
 		if (is_single()) {
 			$cats = get_the_category();
-			$cat = $cats[0];
-			if (is_object($cat)) {
-				if ($cat->parent != 0) {
-					$cats = explode("@@@", get_category_parents($cat->term_id, true, "@@@"));
+			if ($cats) {
+				$cat = $cats[0];
+				if (is_object($cat)) {
+					if ($cat->parent != 0) {
+						$cats = explode("@@@", get_category_parents($cat->term_id, true, "@@@"));
 
-					unset($cats[count($cats)-1]);
-					$output .= str_replace('<li>@@','<li>', '<li>'.implode("</li><li>", $cats).'</li>');
-				} else {
-					$output .= '<li><a href="'.get_category_link($cat->term_id).'">'.$cat->name.'</a></li>';
+						unset($cats[count($cats)-1]);
+						$output .= str_replace('<li>@@','<li>', '<li>'.implode("</li><li>", $cats).'</li>');
+					} else {
+						$output .= '<li><a href="'.get_category_link($cat->term_id).'">'.$cat->name.'</a></li>';
+					}
 				}
 			}
 		}
@@ -79,7 +81,7 @@ function basey_breadcrumbs() {
 			$output .= '<li class="uk-active"><span>'.single_month_title(' ',false).'</span></li>';
 		} elseif (is_author()) {
 
-			$user = !empty($wp_query->query_vars['author_name']) ? get_userdatabylogin($wp_query->query_vars['author']) : get_user_by("id", ((int) $_GET['author']));
+			$user = get_user_by( 'login', get_the_author() );
 
 			$output .= '<li class="uk-active"><span>'.$user->display_name.'</span></li>';
 		} elseif (is_search()) {
@@ -89,6 +91,11 @@ function basey_breadcrumbs() {
 			$term = get_query_var('term');
 			$output .= '<li class="uk-active"><span>'.$taxonomy->label .': '.$term.'</span></li>';
 		} else {
+			if (!in_array(get_post_type(), array('post', 'page'))) {
+				$cpt = get_post_type_object( get_post_type() );
+
+				$output .= '<li><a href="' . get_post_type_archive_link(get_post_type()) . '">' . $cpt->labels->name . '</a></li>';
+			}
 			$ancestors = get_ancestors(get_the_ID(), 'page');
 			for($i = count($ancestors)-1; $i >= 0; $i--) {
 				$output .= '<li><a href="'.get_page_link($ancestors[$i]).'" title="'.get_the_title($ancestors[$i]).'">'.get_the_title($ancestors[$i]).'</a></li>';
@@ -199,7 +206,7 @@ function basey_pagination($type = 'posts') {
  * @return string
  */
 function basey_avatar_class($class) {
-	$class = str_replace("class='avatar", "class='uk-comment-avatar", $class) ;
+	$class = str_replace("class='avatar", "class='uk-comment-avatar uk-border-circle", $class) ;
 	return $class;
 }
 add_filter('get_avatar','basey_avatar_class');

@@ -1,9 +1,9 @@
 {
   "name": "basey",
-  "version": "0.0.1",
+  "version": "5.4.0",
   "private": "true",
   "dependencies": {
-    "uikit": "2.9.*",
+    "uikit": "2.10.*",
 
     "fastclick": "1.*",
     "jquery-placeholder": "2.*",

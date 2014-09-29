@@ -1,22 +1,20 @@
 // Load plugins
-var gulp = require('gulp'),
-    Combine = require('stream-combiner'),
-    path = require('path'),
-    jshint = require('gulp-jshint'),
-    imagemin = require('gulp-imagemin'),
-    csso = require('gulp-csso'),
-    less = require('gulp-less'),
+var gulp         = require('gulp'),
+    Combine      = require('stream-combiner'),
+    jshint       = require('gulp-jshint'),
+    csso         = require('gulp-csso'),
+    less         = require('gulp-less'),
     autoprefixer = require('gulp-autoprefixer'),
-    uglify = require('gulp-uglify'),
-    notify = require('gulp-notify'),
-    newer = require('gulp-newer'),
-    size = require('gulp-size'),
-    concat = require('gulp-concat'),
-    rename = require('gulp-rename'),
-    filesize = require('gulp-size'),
-    livereload = require('gulp-livereload'),
-    duration = require('gulp-duration'),
-    pixrem = require('gulp-pixrem');
+    uglify       = require('gulp-uglify'),
+    notify       = require('gulp-notify'),
+    newer        = require('gulp-newer'),
+    size         = require('gulp-size'),
+    concat       = require('gulp-concat'),
+    rename       = require('gulp-rename'),
+    filesize     = require('gulp-size'),
+    livereload   = require('gulp-livereload'),
+    duration     = require('gulp-duration'),
+    pixrem       = require('gulp-pixrem');
 
 // JS Hint
 gulp.task('jshint', function() {
@@ -26,6 +24,7 @@ gulp.task('jshint', function() {
       'sub': true,
       'evil': true,
       'browser': true,
+      'multistr': true,
       'globals': {
         'module': false,
         'require': true
@@ -142,35 +141,14 @@ gulp.task('styles', function() {
     return combined;
 });
 
-// Media
-gulp.task('media', function() {
-	var mediaDir = 'assets/media/';
-
-  gulp.src(mediaDir + '**/*')
-    .pipe(newer(mediaDir))
-    .pipe(imagemin())
-    .pipe(filesize({
-      title: 'Media File:'
-    }))
-    .pipe(gulp.dest(mediaDir))
-    .pipe(duration('compressing media'))
-    .pipe(notify({ message: 'Media task complete' }));
-});
-
 // Default task
-gulp.task('default', ['copy', 'styles', 'jshint', 'scripts', 'media']);
+gulp.task('default', ['copy', 'styles', 'jshint', 'scripts']);
 
 // Watch
 gulp.task('watch', function() {
 
-  // Sass
   gulp.watch('assets/css/src/**/*.less', ['styles']);
-
-  // JS
   gulp.watch('assets/js/src/**/*.js', ['jshint', 'scripts']);
-
-  // Media
-  gulp.watch('assets/media/**/*', ['media']);
 
   // Create LiveReload server
   var server = livereload();
