@@ -14,7 +14,8 @@ var gulp         = require("gulp"),
     filesize     = require("gulp-size"),
     livereload   = require("gulp-livereload"),
     duration     = require("gulp-duration"),
-    pixrem       = require("gulp-pixrem");
+    pixrem       = require("gulp-pixrem"),
+    sourcemaps   = require('gulp-sourcemaps');
 
 var paths =  {
   "scripts": {
@@ -123,8 +124,10 @@ gulp.task("scripts", function() {
       // Project
       "assets/js/src/_init.js"
     ])
-    .pipe(concat("scripts.min.js"))
-    .pipe(uglify())
+    .pipe(sourcemaps.init())
+      .pipe(concat("scripts.min.js"))
+      .pipe(uglify())
+    .pipe(sourcemaps.write("../maps"))
     .pipe(filesize({
       title: "Main Scripts:"
     }))
