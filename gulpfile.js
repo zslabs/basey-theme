@@ -1,65 +1,82 @@
 // Load plugins
-var gulp         = require('gulp'),
-    Combine      = require('stream-combiner'),
-    jshint       = require('gulp-jshint'),
-    csso         = require('gulp-csso'),
-    less         = require('gulp-less'),
-    autoprefixer = require('gulp-autoprefixer'),
-    uglify       = require('gulp-uglify'),
-    notify       = require('gulp-notify'),
-    newer        = require('gulp-newer'),
-    size         = require('gulp-size'),
-    concat       = require('gulp-concat'),
-    rename       = require('gulp-rename'),
-    filesize     = require('gulp-size'),
-    livereload   = require('gulp-livereload'),
-    duration     = require('gulp-duration'),
-    pixrem       = require('gulp-pixrem');
+var gulp         = require("gulp"),
+    Combine      = require("stream-combiner"),
+    jshint       = require("gulp-jshint"),
+    csso         = require("gulp-csso"),
+    less         = require("gulp-less"),
+    autoprefixer = require("gulp-autoprefixer"),
+    uglify       = require("gulp-uglify"),
+    notify       = require("gulp-notify"),
+    newer        = require("gulp-newer"),
+    size         = require("gulp-size"),
+    concat       = require("gulp-concat"),
+    rename       = require("gulp-rename"),
+    filesize     = require("gulp-size"),
+    livereload   = require("gulp-livereload"),
+    duration     = require("gulp-duration"),
+    pixrem       = require("gulp-pixrem");
+
+var paths =  {
+  "scripts": {
+    "src": "assets/js/src/**/*.js",
+    "build": "assets/js/build/",
+    "vendor": "!assets/js/src/vendor/**/*.js"
+  },
+  "styles": {
+    "src": "assets/css/src/**/*.less",
+    "build": "assets/css/build/"
+  },
+  "media": {
+    "src": "assets/media/"
+  },
+  "fonts": {
+    "build": "assets/fonts/"
+  }
+};
 
 // JS Hint
-gulp.task('jshint', function() {
-  gulp.src('assets/js/src/*.js')
+gulp.task("jshint", function() {
+  gulp.src([paths.scripts.src, paths.scripts.vendor])
     .pipe(jshint({
-      'boss': true,
-      'sub': true,
-      'evil': true,
-      'browser': true,
-      'multistr': true,
-      'globals': {
-        'module': false,
-        'require': true
+      "boss": true,
+      "sub": true,
+      "evil": true,
+      "browser": true,
+      "multistr": true,
+      "globals": {
+        "module": false,
+        "require": true
       }
     }))
-    .pipe(jshint.reporter('jshint-stylish'))
-    .pipe(duration('hinting files'))
-    .pipe(notify({ message: 'JS Hint task complete' }));
+    .pipe(jshint.reporter("jshint-stylish"))
+    .pipe(duration("hinting files"))
+    .pipe(notify({ message: "JS Hint task complete" }));
 });
 
 // Copy
-gulp.task('copy', function() {
+gulp.task("copy", function() {
   // UIkit fonts
-  gulp.src('bower_components/uikit/dist/fonts/*')
-    .pipe(gulp.dest('assets/fonts/'));
+  gulp.src("bower_components/uikit/dist/fonts/*")
+    .pipe(gulp.dest(paths.fonts.build));
 });
 
 // Scripts
-gulp.task('scripts', function() {
-  var jsBuildDir = 'assets/js/build/';
+gulp.task("scripts", function() {
 
   // IE
   gulp.src([
-      'bower_components/selectivizr/selectivizr.js',
-      'bower_components/respond/dest/respond.min.js',
-      'assets/js/src/vendor/ecmascript-polyfill.js',
-      'assets/js/src/vendor/forEach-polyfill.js',
+      "bower_components/selectivizr/selectivizr.js",
+      "bower_components/respond/dest/respond.min.js",
+      "assets/js/src/vendor/ecmascript-polyfill.js",
+      "assets/js/src/vendor/forEach-polyfill.js",
     ])
-    .pipe(concat('ie.min.js'))
+    .pipe(concat("ie.min.js"))
     .pipe(uglify())
     .pipe(filesize({
-      title: 'IE Scripts:'
+      title: "IE Scripts:"
     }))
-    .pipe(gulp.dest(jsBuildDir))
-    .pipe(notify({ message: 'IE scripts task complete' }));
+    .pipe(gulp.dest(paths.scripts.build))
+    .pipe(notify({ message: "IE scripts task complete" }));
 
   // Main
   gulp.src([
@@ -104,37 +121,37 @@ gulp.task('scripts', function() {
       "bower_components/parsleyjs/dist/parsley.js",
 
       // Project
-      'assets/js/src/_init.js'
+      "assets/js/src/_init.js"
     ])
-    .pipe(concat('scripts.min.js'))
+    .pipe(concat("scripts.min.js"))
     .pipe(uglify())
     .pipe(filesize({
-      title: 'Main Scripts:'
+      title: "Main Scripts:"
     }))
-    .pipe(gulp.dest(jsBuildDir))
-    .pipe(duration('building main JS files'))
-    .pipe(notify({ message: 'Main scripts task complete' }));
+    .pipe(gulp.dest(paths.scripts.build))
+    .pipe(duration("building main JS files"))
+    .pipe(notify({ message: "Main scripts task complete" }));
 });
 
 // Styles
-gulp.task('styles', function() {
+gulp.task("styles", function() {
   var combined = Combine(
-      gulp.src('assets/css/src/app.less'),
+      gulp.src("assets/css/src/app.less"),
       less(),
-      autoprefixer('last 2 version', 'ie 9'),
+      autoprefixer("last 2 version", "ie 9"),
       csso(),
-      pixrem('14px', {
+      pixrem("14px", {
         replace: true
       }),
       filesize({
-        title: 'Styles:'
+        title: "Styles:"
       }),
-      gulp.dest('assets/css/build/'),
-      duration('building styles'),
-      notify({ message: 'Styles task complete' })
+      gulp.dest(paths.styles.build),
+      duration("building styles"),
+      notify({ message: "Styles task complete" })
     );
 
-    combined.on('error', function(err) {
+    combined.on("error", function(err) {
       console.warn(err.message);
     });
 
@@ -142,19 +159,19 @@ gulp.task('styles', function() {
 });
 
 // Default task
-gulp.task('default', ['copy', 'styles', 'jshint', 'scripts']);
+gulp.task("default", ["copy", "styles", "jshint", "scripts"]);
 
 // Watch
-gulp.task('watch', function() {
+gulp.task("watch", function() {
 
-  gulp.watch('assets/css/src/**/*.less', ['styles']);
-  gulp.watch('assets/js/src/**/*.js', ['jshint', 'scripts']);
+  gulp.watch(paths.styles.src, ["styles"]);
+  gulp.watch(paths.scripts.src, ["jshint", "scripts"]);
 
   // Create LiveReload server
   var server = livereload();
 
   // Watch files in patterns below, reload on change
-  gulp.watch(['assets/css/build/*', 'assets/js/build/*', '*.php']).on('change', function(file) {
+  gulp.watch([paths.styles.build, paths.scripts.build, "*.php"]).on("change", function(file) {
     server.changed(file.path);
   });
 
