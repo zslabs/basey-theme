@@ -38,3 +38,6 @@ dwsync.xml
 intermediate
 .idea
 cache
+
+# Sourcemaps
+assets/js/sourcemaps/*

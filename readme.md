@@ -10,14 +10,14 @@ Extremely flexible, easy to customize and adheres to WordPress coding standards 
     * [NodeJS](http://nodejs.org)
     * [Bower](http://bower.io)
     * [Gulp](http://gulpjs.com)
-* In your terminal, navigate to your site's directory and run the following:
+* In your terminal, navigate to your theme's directory and run the following:
     * `bower install`
     	* Installs necessary frontend assets
     * `npm install`
     	* Installs Gulp and Gulp plugins for compiling assets
     * `gulp`
-   		* Builds initial styles
-    * `gulp watch`
-    	* Watches the theme folder for changes
+   		* Builds initial project and watches for changes
+
+This project uses [BrowserSync](http://www.browsersync.io/) to automatically watch, compile, reload, etc. Change the proxy variable in the gulpfile to match your environment before starting.
 
 Enjoy!

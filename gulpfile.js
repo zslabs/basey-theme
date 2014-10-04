@@ -1,39 +1,50 @@
 // Load plugins
 var gulp         = require("gulp"),
-    Combine      = require("stream-combiner"),
-    jshint       = require("gulp-jshint"),
+    imagemin     = require("gulp-imagemin"),
     csso         = require("gulp-csso"),
     less         = require("gulp-less"),
     autoprefixer = require("gulp-autoprefixer"),
     uglify       = require("gulp-uglify"),
     notify       = require("gulp-notify"),
-    newer        = require("gulp-newer"),
-    size         = require("gulp-size"),
+    jshint       = require("gulp-jshint"),
+    changed      = require("gulp-changed"),
     concat       = require("gulp-concat"),
-    rename       = require("gulp-rename"),
     filesize     = require("gulp-size"),
-    livereload   = require("gulp-livereload"),
     duration     = require("gulp-duration"),
     pixrem       = require("gulp-pixrem"),
-    sourcemaps   = require('gulp-sourcemaps');
+    sourcemaps   = require("gulp-sourcemaps"),
+    browserSync  = require("browser-sync"),
+    plumber      = require("gulp-plumber"),
+    merge        = require("merge-stream"),
+    filter       = require("gulp-filter");
 
-var paths =  {
-  "scripts": {
-    "src": "assets/js/src/**/*.js",
-    "build": "assets/js/build/",
-    "vendor": "!assets/js/src/vendor/**/*.js"
-  },
-  "styles": {
-    "src": "assets/css/src/**/*.less",
-    "build": "assets/css/build/"
-  },
-  "media": {
-    "src": "assets/media/"
-  },
-  "fonts": {
-    "build": "assets/fonts/"
-  }
-};
+var reload = browserSync.reload,
+    paths =  {
+      "scripts": {
+        "src": "assets/js/src/**/*.js",
+        "build": "assets/js/build/",
+        "vendor": "!assets/js/src/vendor/**/*.js"
+      },
+      "styles": {
+        "src": "assets/css/src/**/*.less",
+        "build": "assets/css/build/"
+      },
+      "media": {
+        "src": "assets/media/src/*",
+        "build": "assets/media/build/"
+      },
+      "fonts": {
+        "build": "assets/fonts/"
+      }
+    };
+
+// BrowserSync
+gulp.task("reload", function() {
+  browserSync({
+    proxy: "wordpress.dev",
+    xip: true
+  });
+});
 
 // JS Hint
 gulp.task("jshint", function() {
@@ -57,7 +68,8 @@ gulp.task("jshint", function() {
 // Copy
 gulp.task("copy", function() {
   // UIkit fonts
-  gulp.src("bower_components/uikit/dist/fonts/*")
+  return gulp.src("bower_components/uikit/dist/fonts/*")
+    .pipe(changed(paths.fonts.build))
     .pipe(gulp.dest(paths.fonts.build));
 });
 
@@ -65,12 +77,13 @@ gulp.task("copy", function() {
 gulp.task("scripts", function() {
 
   // IE
-  gulp.src([
+  var ie = gulp.src([
       "bower_components/selectivizr/selectivizr.js",
       "bower_components/respond/dest/respond.min.js",
       "assets/js/src/vendor/ecmascript-polyfill.js",
       "assets/js/src/vendor/forEach-polyfill.js",
     ])
+    .pipe(changed(paths.scripts.build))
     .pipe(concat("ie.min.js"))
     .pipe(uglify())
     .pipe(filesize({
@@ -80,7 +93,7 @@ gulp.task("scripts", function() {
     .pipe(notify({ message: "IE scripts task complete" }));
 
   // Main
-  gulp.src([
+  var main = gulp.src([
       // UI Kit
       "bower_components/uikit/src/js/core.js",
       "bower_components/uikit/src/js/component.js",
@@ -124,58 +137,68 @@ gulp.task("scripts", function() {
       // Project
       "assets/js/src/_init.js"
     ])
+    .pipe(changed(paths.scripts.build))
     .pipe(sourcemaps.init())
       .pipe(concat("scripts.min.js"))
       .pipe(uglify())
-    .pipe(sourcemaps.write("../maps"))
+    .pipe(sourcemaps.write("../sourcemaps"))
+    .pipe(filter('**/*.js')) // Filter only JS files for filesize/dest
     .pipe(filesize({
       title: "Main Scripts:"
     }))
     .pipe(gulp.dest(paths.scripts.build))
     .pipe(duration("building main JS files"))
     .pipe(notify({ message: "Main scripts task complete" }));
+
+    return merge(ie, main);
 });
 
 // Styles
 gulp.task("styles", function() {
-  var combined = Combine(
-      gulp.src("assets/css/src/app.less"),
-      less(),
-      autoprefixer("last 2 version", "ie 9"),
-      csso(),
-      pixrem("14px", {
+  return gulp.src("assets/css/src/app.less")
+    .pipe(changed(paths.styles.build))
+    .pipe(plumber())
+      .pipe(less())
+      .pipe(autoprefixer({
+        browsers: ["last 2 versions", "ie 9"]
+      }))
+      .pipe(csso())
+      .pipe(pixrem("14px", {
         replace: true
-      }),
-      filesize({
-        title: "Styles:"
-      }),
-      gulp.dest(paths.styles.build),
-      duration("building styles"),
-      notify({ message: "Styles task complete" })
-    );
+      }))
+    .pipe(plumber.stop())
+    .pipe(filesize({
+      title: "Styles:"
+    }))
+    .pipe(gulp.dest(paths.styles.build))
+    .pipe(duration("building styles"))
+    .pipe(notify({ message: "Styles task complete" }))
+    .pipe(reload({
+      stream:true
+    }));
+});
 
-    combined.on("error", function(err) {
-      console.warn(err.message);
-    });
+// Media
+gulp.task("media", function() {
 
-    return combined;
+  return gulp.src(paths.media.src)
+    .pipe(changed(paths.media.build))
+    .pipe(imagemin())
+    .pipe(filesize({
+      title: "Media File:"
+    }))
+    .pipe(gulp.dest(paths.media.build))
+    .pipe(duration("compressing media"))
+    .pipe(notify({ message: "Media task complete" }));
 });
 
 // Default task
-gulp.task("default", ["copy", "styles", "jshint", "scripts"]);
+gulp.task("default", ["copy", "styles", "jshint", "scripts", "media", "watch"]);
 
 // Watch
-gulp.task("watch", function() {
-
+gulp.task("watch", ["reload"], function () {
+  gulp.watch(paths.scripts.src, ["jshint", "scripts", browserSync.reload]);
   gulp.watch(paths.styles.src, ["styles"]);
-  gulp.watch(paths.scripts.src, ["jshint", "scripts"]);
-
-  // Create LiveReload server
-  var server = livereload();
-
-  // Watch files in patterns below, reload on change
-  gulp.watch([paths.styles.build, paths.scripts.build, "*.php"]).on("change", function(file) {
-    server.changed(file.path);
-  });
-
+  gulp.watch(paths.media.src, ["media"]);
+  gulp.watch("*.php", ["", browserSync.reload]);
 });
