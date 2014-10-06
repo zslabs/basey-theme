@@ -20,6 +20,4 @@ Extremely flexible, easy to customize and adheres to WordPress coding standards 
    	* `gulp watch`
    		* Watches for project changes
 
-This project uses [BrowserSync](http://www.browsersync.io/) to automatically watch, compile, reload, etc. Change the proxy variable in the gulpfile to match your environment before starting.
-
 Enjoy!
