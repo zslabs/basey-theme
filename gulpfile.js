@@ -13,13 +13,12 @@ var gulp         = require("gulp"),
     duration     = require("gulp-duration"),
     pixrem       = require("gulp-pixrem"),
     sourcemaps   = require("gulp-sourcemaps"),
-    browserSync  = require("browser-sync"),
     plumber      = require("gulp-plumber"),
     merge        = require("merge-stream"),
-    filter       = require("gulp-filter");
+    filter       = require("gulp-filter"),
+    livereload   = require("gulp-livereload");
 
-var reload = browserSync.reload,
-    paths =  {
+var paths =  {
       "scripts": {
         "src": "assets/js/src/**/*.js",
         "build": "assets/js/build/",
@@ -37,14 +36,6 @@ var reload = browserSync.reload,
         "build": "assets/fonts/"
       }
     };
-
-// BrowserSync
-gulp.task("reload", function() {
-  browserSync({
-    proxy: "wordpress.dev",
-    xip: true
-  });
-});
 
 // JS Hint
 gulp.task("jshint", function() {
@@ -172,10 +163,7 @@ gulp.task("styles", function() {
     }))
     .pipe(gulp.dest(paths.styles.build))
     .pipe(duration("building styles"))
-    .pipe(notify({ message: "Styles task complete" }))
-    .pipe(reload({
-      stream:true
-    }));
+    .pipe(notify({ message: "Styles task complete" }));
 });
 
 // Media
@@ -193,12 +181,19 @@ gulp.task("media", function() {
 });
 
 // Default task
-gulp.task("default", ["copy", "styles", "jshint", "scripts", "media", "watch"]);
+gulp.task("default", ["copy", "styles", "jshint", "scripts", "media"]);
 
 // Watch
-gulp.task("watch", ["reload"], function () {
-  gulp.watch(paths.scripts.src, ["jshint", "scripts", browserSync.reload]);
+gulp.task("watch", function () {
+  gulp.watch(paths.scripts.src, ["jshint", "scripts"]);
   gulp.watch(paths.styles.src, ["styles"]);
   gulp.watch(paths.media.src, ["media"]);
-  gulp.watch("*.php", ["", browserSync.reload]);
+
+  // Create LiveReload server
+  var server = livereload();
+
+  // Watch files in patterns below, reload on change
+  gulp.watch(['assets/css/build/*', 'assets/js/build/*', '**/*.php']).on('change', function(file) {
+    server.changed(file.path);
+  });
 });
