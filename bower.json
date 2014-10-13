@@ -3,7 +3,7 @@
   "version": "5.5.0",
   "private": "true",
   "dependencies": {
-    "uikit": "2.10.*",
+    "uikit": "uikit/uikit#2.11.1",
 
     "fastclick": "1.*",
     "jquery-placeholder": "2.*",
