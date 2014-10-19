@@ -1,8 +1,13 @@
 // Load plugins
 var gulp         = require("gulp"),
+    svgSprite    = require("gulp-svg-sprites"),
+    replace      = require("gulp-replace"),
     imagemin     = require("gulp-imagemin"),
+    pngcrush     = require('imagemin-pngcrush'),
     csso         = require("gulp-csso"),
     less         = require("gulp-less"),
+    coffee       = require("gulp-coffee"),
+    coffeelint   = require("gulp-coffeelint"),
     autoprefixer = require("gulp-autoprefixer"),
     uglify       = require("gulp-uglify"),
     notify       = require("gulp-notify"),
@@ -31,6 +36,10 @@ var paths =  {
       "media": {
         "src": "assets/media/src/*",
         "build": "assets/media/build/"
+      },
+      "svg": {
+        "src": "assets/svg/src/*.svg",
+        "build": "assets/svg/build/"
       },
       "fonts": {
         "build": "assets/fonts/"
@@ -75,8 +84,10 @@ gulp.task("scripts", function() {
       "assets/js/src/vendor/forEach-polyfill.js",
     ])
     .pipe(changed(paths.scripts.build))
-    .pipe(concat("ie.min.js"))
-    .pipe(uglify())
+    .pipe(sourcemaps.init())
+      .pipe(concat("ie.min.js"))
+      .pipe(uglify())
+    .pipe(sourcemaps.write("../sourcemaps"))
     .pipe(filesize({
       title: "IE Scripts:"
     }))
@@ -124,16 +135,13 @@ gulp.task("scripts", function() {
       "bower_components/fastclick/lib/fastclick.js",
       "bower_components/jquery-placeholder/jquery.placeholder.js",
       "bower_components/parsleyjs/dist/parsley.js",
-
-      // Project
-      "assets/js/src/_init.js"
+      "bower_components/svg4everybody/svg4everybody.js"
     ])
     .pipe(changed(paths.scripts.build))
     .pipe(sourcemaps.init())
-      .pipe(concat("scripts.min.js"))
+      .pipe(concat("dep.min.js"))
       .pipe(uglify())
     .pipe(sourcemaps.write("../sourcemaps"))
-    .pipe(filter('**/*.js')) // Filter only JS files for filesize/dest
     .pipe(filesize({
       title: "Main Scripts:"
     }))
@@ -142,6 +150,24 @@ gulp.task("scripts", function() {
     .pipe(notify({ message: "Main scripts task complete" }));
 
     return merge(ie, main);
+});
+
+// Coffee
+gulp.task("coffee", function() {
+  return gulp.src([
+    "assets/js/src/_init.coffee",
+    ])
+    .pipe(changed(paths.scripts.build))
+    .pipe(plumber())
+      .pipe(coffeelint())
+      .pipe(coffeelint.reporter())
+      .pipe(sourcemaps.init())
+        .pipe(concat("app.min.coffee"))
+        .pipe(coffee())
+        .pipe(uglify())
+      .pipe(sourcemaps.write("../sourcemaps"))
+    .pipe(plumber.stop())
+    .pipe(gulp.dest(paths.scripts.build));
 });
 
 // Styles
@@ -180,20 +206,44 @@ gulp.task("media", function() {
     .pipe(notify({ message: "Media task complete" }));
 });
 
+// SVG
+gulp.task("svg", function () {
+  return gulp.src(paths.svg.src)
+    .pipe(replace("#000000", "#000001")) // This is to fix https://github.com/svg/svgo/issues/115
+    .pipe(imagemin())
+    .pipe(gulp.dest(paths.svg.build));
+});
+
+gulp.task("svg-sprite", function () {
+  return gulp.src(paths.svg.src)
+    .pipe(replace("#000000", "#000001")) // This is to fix https://github.com/svg/svgo/issues/115
+    .pipe(svgSprite({
+      mode: "symbols",
+      svgPath: "%f",
+      preview: false,
+      svg: {
+      symbols: "sprite.svg"
+      }
+    }))
+    .pipe(gulp.dest(paths.svg.build));
+});
+
 // Default task
-gulp.task("default", ["copy", "styles", "jshint", "scripts", "media"]);
+gulp.task("default", ["copy", "styles", "jshint", "scripts", "coffee", "media", "svg", "svg-sprite"]);
 
 // Watch
 gulp.task("watch", function () {
   gulp.watch(paths.scripts.src, ["jshint", "scripts"]);
+  gulp.watch("assets/js/src/**/*.coffee", ["coffee"]);
   gulp.watch(paths.styles.src, ["styles"]);
   gulp.watch(paths.media.src, ["media"]);
+  gulp.watch(paths.svg.src, ["svg", "svg-sprite"]);
 
   // Create LiveReload server
   var server = livereload();
 
   // Watch files in patterns below, reload on change
-  gulp.watch(['assets/css/build/*', 'assets/js/build/*', '**/*.php']).on('change', function(file) {
+  gulp.watch(["assets/css/build/*", "assets/js/build/*", "**/*.php", "assets/svg/build/*"]).on("change", function(file) {
     server.changed(file.path);
   });
 });

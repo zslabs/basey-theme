@@ -1,15 +1,14 @@
 {
   "name": "basey-theme",
-  "version": "5.5.0",
+  "version": "6.0.0",
   "private": "true",
   "dependencies": {
     "uikit": "uikit/uikit#2.11.1",
-
     "fastclick": "1.*",
     "jquery-placeholder": "2.*",
     "parsleyjs": "2.*",
-
     "selectivizr": "*",
-    "respond": "*"
+    "respond": "*",
+    "svg4everybody": "*"
   }
 }
