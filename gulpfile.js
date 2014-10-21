@@ -241,6 +241,7 @@ gulp.task("watch", function () {
 
   // Create LiveReload server
   var server = livereload();
+  livereload.listen();
 
   // Watch files in patterns below, reload on change
   gulp.watch(["assets/css/build/*", "assets/js/build/*", "**/*.php", "assets/svg/build/*"]).on("change", function(file) {
