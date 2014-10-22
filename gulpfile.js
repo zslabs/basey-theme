@@ -172,7 +172,7 @@ gulp.task("coffee", function() {
 
 // Styles
 gulp.task("styles", function() {
-  return gulp.src("assets/css/src/app.less")
+  gulp.src("assets/css/src/app.less")
     .pipe(changed(paths.styles.build))
     .pipe(plumber())
       .pipe(less())
@@ -194,7 +194,6 @@ gulp.task("styles", function() {
 
 // Media
 gulp.task("media", function() {
-
   return gulp.src(paths.media.src)
     .pipe(changed(paths.media.build))
     .pipe(imagemin())
