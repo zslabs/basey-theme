@@ -126,6 +126,8 @@ gulp.task("scripts", function() {
       "bower_components/uikit/src/js/components/notify.js",
       "bower_components/uikit/src/js/components/pagination.js",
       "bower_components/uikit/src/js/components/search.js",
+      "bower_components/uikit/src/js/components/slideshow.js",
+      "bower_components/uikit/src/js/components/slideshow-fx.js",
       "bower_components/uikit/src/js/components/sortable.js",
       "bower_components/uikit/src/js/components/sticky.js",
       "bower_components/uikit/src/js/components/timepicker.js",
