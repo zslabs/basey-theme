@@ -33,20 +33,15 @@ function basey_get_post_type_count($post_type_name) {
 	$search_query = get_search_query();
 	$search_query_db = preg_replace('/[^a-zA-Z0-9.]/', '', $search_query);
 
-	$post_type_count = get_transient('basey_search_' . $post_type_name . '_' . $search_query_db );
-	if (false === $post_type_count) {
-
-		// Count number of "total" results returned for each post type
-		// This is independant of "posts_per_page"
-		$post_type_count = $wpdb->get_var("
-			SELECT COUNT(*) FROM $wpdb->posts
-			WHERE post_type='$post_type_name'
-			AND ( post_title LIKE '%$search_query%'
-			OR post_content LIKE '%$search_query%')
-		");
-
-		set_transient( 'basey_search_' . $post_type_name . '_' . $search_query_db, $post_type_count, 60 * 60 );
-	}
+	// Count number of "total" results returned for each post type
+	// This is independant of "posts_per_page"
+	$post_type_count = $wpdb->get_var("
+		SELECT COUNT(*) FROM $wpdb->posts
+		WHERE post_type='$post_type_name'
+		AND post_status='publish'
+		AND ( post_title LIKE '%$search_query%'
+		OR post_content LIKE '%$search_query%')
+	");
 
 	return $post_type_count;
 }

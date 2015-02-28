@@ -28,7 +28,6 @@ locate_template( 'templates/header.php', true, true );
 			echo '<ul id="search-nav" class="uk-subnav uk-subnav-pill">';
 				echo '<li><span>' . __('Filter Results', 'basey') . '</span>';
 				foreach ( $results['post_types'] as $post_type) {
-
 					$post_type_name = $post_type['name'];
 					$post_type_count = basey_get_post_type_count($post_type_name);
 
