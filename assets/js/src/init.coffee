@@ -1,6 +1,8 @@
 (($) ->
   "use strict"
 
+  # SVG Icons
+
   ## Set multiple attributes for element
   setAttributes = (el, attrs) ->
     Array::slice.call(attrs).forEach (attr) ->
@@ -16,7 +18,7 @@
     use.setAttributeNS(
       'http://www.w3.org/1999/xlink',
       'xlink:href',
-      svgSpritePath + '#' + element.dataset.btIcon
+      svgSpritePath + '#' + element.getAttribute "data-bt-icon"
     )
 
     svg.appendChild use
@@ -25,6 +27,9 @@
 
   # Placeholder
   $('[placeholder]').placeholder()
+
+  # FastClick
+  FastClick.attach document.body
 
   return
 ) jQuery

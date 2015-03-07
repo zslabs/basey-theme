@@ -10,6 +10,7 @@ Extremely flexible, easy to customize and adheres to WordPress coding standards 
     * [NodeJS](http://nodejs.org)
     * [Bower](http://bower.io)
     * [Gulp](http://gulpjs.com)
+* Have a vhost setup for `wordpress.dev`. You can change this to your liking in `gulpfile.coffee`; needed for BrowserSync
 * In your terminal, navigate to your theme's directory and run the following:
     * `bower install`
     	* Installs necessary frontend assets

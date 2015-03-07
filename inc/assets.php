@@ -10,26 +10,6 @@ function basey_styles() {
 add_action( 'wp_enqueue_scripts', 'basey_styles', 12 );
 
 /**
- * Enqueue Modernizr
- * @return void
- */
-function basey_enqueue_modernizr() {
-	wp_enqueue_script( 'basey-modernizr', get_template_directory_uri() . '/assets/js/build/vendor/modernizr.js', '', BASEY_VER, false );
-}
-add_action( 'wp_enqueue_scripts', 'basey_enqueue_modernizr', 8 );
-
-/**
- * Add conditional IE scripts
- * @return void
- */
-function basey_ie_scripts() { ?>
-	<!--[if lt IE 9]>
-		<script src="<?php echo get_template_directory_uri(); ?>/assets/js/build/ie.min.js" type="text/javascript"></script>
-	<![endif]-->
-<?php }
-add_action( 'wp_head', 'basey_ie_scripts', 8 );
-
-/**
  * Enqueue scripts
  * @return void
  */
