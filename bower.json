@@ -3,7 +3,7 @@
   "version": "7.0.0",
   "private": "true",
   "dependencies": {
-    "uikit": "uikit/uikit#2.20.2",
+    "uikit": "uikit/uikit#2.20.3",
     "jquery-placeholder": "2.*",
     "parsleyjs": "2.*",
     "svg4everybody": "*"
