@@ -1,0 +1,43 @@
+//
+// Icons
+//
+.bt-icon {
+  width: 0.85em;
+  height: 0.85em;
+  position: relative;
+  fill: currentColor;
+  display: inline-block;
+
+  a > & {
+    pointer-events: none;
+  }
+}
+.bt-icon--smaller {
+  width: 0.65em;
+  height: 0.65em;
+}
+.bt-icon--standalone {
+  width: 1em;
+  height: 1em;
+}
+.bt-icon--larger {
+  width: 1.25em;
+  height: 1.25em;
+  transform: translateY(.2em);
+}
+
+.bt-icon-fill(@src, @fill-default, @fill-new) {
+  @escape-fill-default: escape(@fill-default);
+  @escape-fill-new: escape(@fill-new);
+  @data-uri: data-uri('image/svg+xml;charset=UTF-8', "@{src}");
+  @replace-src: replace("@{data-uri}", "@{escape-fill-default}", "@{escape-fill-new}");
+  background-image: e(@replace-src);
+}
+
+.bt-icon-no-fill(@src, @fill-new) {
+  @data-uri: data-uri('image/svg+xml;charset=UTF-8', "@{src}");
+  @replace-default: escape('<path ');
+  @replace-new: escape('<path fill="@{fill-new}" ');
+  @replace-src: replace("@{data-uri}", @replace-default, @replace-new, "g");
+  background-image: e(@replace-src);
+}

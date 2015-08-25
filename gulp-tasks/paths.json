@@ -1,0 +1,19 @@
+{
+  "fonts": "assets/fonts/",
+  "scripts": {
+    "src": "assets/js/src/**/*.js",
+    "build": "assets/js/build/"
+  },
+  "styles": {
+    "src": "assets/css/src/**/*.less",
+    "build": "assets/css/build/"
+  },
+  "media": {
+    "src": "assets/media/src/**/*",
+    "build": "assets/media/build/"
+  },
+  "svg": {
+    "src": "assets/svg/src/*.svg",
+    "build": "assets/svg/build/"
+  }
+}

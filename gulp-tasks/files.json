@@ -1,0 +1,50 @@
+{
+  "deps": [
+    "bower_components/boomsvgloader/dist/js/boomsvgloader.js",
+    "bower_components/jquery-placeholder/jquery.placeholder.js",
+    "bower_components/parsleyjs/dist/parsley.js",
+
+    "bower_components/uikit/src/js/core/core.js",
+    "bower_components/uikit/src/js/core/component.js",
+    "bower_components/uikit/src/js/core/utility.js",
+    "bower_components/uikit/src/js/core/touch.js",
+    "bower_components/uikit/src/js/core/alert.js",
+    "bower_components/uikit/src/js/core/button.js",
+    "bower_components/uikit/src/js/core/dropdown.js",
+    "bower_components/uikit/src/js/core/grid.js",
+    "bower_components/uikit/src/js/core/modal.js",
+    "bower_components/uikit/src/js/core/offcanvas.js",
+    "bower_components/uikit/src/js/core/nav.js",
+    "bower_components/uikit/src/js/core/switcher.js",
+    "bower_components/uikit/src/js/core/tab.js",
+    "bower_components/uikit/src/js/core/scrollspy.js",
+    "bower_components/uikit/src/js/core/smooth-scroll.js",
+    "bower_components/uikit/src/js/core/toggle.js",
+
+    "bower_components/uikit/src/js/components/accordion.js",
+    "bower_components/uikit/src/js/components/autocomplete.js",
+    "bower_components/uikit/src/js/components/datepicker.js",
+    "bower_components/uikit/src/js/components/form-password.js",
+    "bower_components/uikit/src/js/components/form-select.js",
+    "bower_components/uikit/src/js/components/grid.js",
+    "bower_components/uikit/src/js/components/htmleditor.js",
+    "bower_components/uikit/src/js/components/lightbox.js",
+    "bower_components/uikit/src/js/components/nestable.js",
+    "bower_components/uikit/src/js/components/notify.js",
+    "bower_components/uikit/src/js/components/pagination.js",
+    "bower_components/uikit/src/js/components/parallax.js",
+    "bower_components/uikit/src/js/components/search.js",
+    "bower_components/uikit/src/js/components/slider.js",
+    "bower_components/uikit/src/js/components/slideset.js",
+    "bower_components/uikit/src/js/components/slideshow.js",
+    "bower_components/uikit/src/js/components/slideshow-fx.js",
+    "bower_components/uikit/src/js/components/sortable.js",
+    "bower_components/uikit/src/js/components/sticky.js",
+    "bower_components/uikit/src/js/components/timepicker.js",
+    "bower_components/uikit/src/js/components/tooltip.js",
+    "bower_components/uikit/src/js/components/upload.js"
+  ],
+  "app": [
+    "assets/js/src/init.js"
+  ]
+}
