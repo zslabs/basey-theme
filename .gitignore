@@ -41,3 +41,4 @@ cache
 
 # Sourcemaps
 assets/js/sourcemaps/*
+assets/css/sourcemaps/*

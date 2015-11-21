@@ -11,57 +11,68 @@
 // Text
 //
 
-@global-color:                                  #444;
-@global-muted-color:                            #999;
-@global-text-shadow:                            #fff;
+@global-color                     : #444;
+@global-muted-color               : lighten(@global-color, 25);
+@global-text-shadow               : #fff;
 
-@global-link-color:                             #07D;
-@global-link-hover-color:                       #059;
+@global-link-color                : @global-primary-background;
+@global-link-hover-color          : darken(@global-primary-background, 10);
 
-@global-contrast-color:                         #fff;
-@global-contrast-text-shadow:                   rgba(0,0,0,0.1);
+@global-contrast-color            : #fff;
+@global-contrast-text-shadow      : rgba(0,0,0,0.1);
 
-@global-font-size:                              14px;
-@global-line-height:                            20px;
+@global-font-size                 : 14px;
+@global-line-height               : 1.5;
 
 //
 // Backgrounds & Borders
 //
 
-@global-background:                             #fff;
-@global-border:                                 #ddd;
+@global-background                : #fff;
+@global-border                    : #ddd;
 
-@global-border-radius:                          4px;
+@global-border-radius             : 3px;
 
-@global-default-background:                     #f5f5f5;
-@global-default-hover-background:               #fafafa;
-@global-default-active-background:              #eee;
+@global-default-background        : #fbfbfb;
+@global-default-hover-background  : darken(@global-default-background, 5%);
+@global-default-active-background : darken(@global-default-background, 10%);
 
-@global-primary-background:                     #00a8e6;
-@global-success-background:                     #8cc14c;
-@global-warning-background:                     #faa732;
-@global-danger-background:                      #da314b;
+@global-primary-background        : #1d8acb;
+@global-primary-hover-background  : darken(@global-primary-background, 5%);
+@global-primary-active-background : darken(@global-primary-background, 10%);
+
+@global-success-background        : #659f13;
+@global-success-hover-background  : darken(@global-success-background, 5%);
+@global-success-active-background : darken(@global-success-background, 10%);
+
+@global-warning-background        : #e28327;
+@global-warning-hover-background  : darken(@global-warning-background, 5%);
+@global-warning-active-background : darken(@global-warning-background, 10%);
+
+@global-danger-background         : #d85030;
+@global-danger-hover-background   : darken(@global-danger-background, 5%);
+@global-danger-active-background  : darken(@global-danger-background, 10%);
 
 //
 // Spacings
 //
 
-@global-margin:                                 15px;
-@global-margin-large:                           @global-margin;
-@global-grid-gutter:                            @global-margin;
-@global-grid-gutter-large:                      @global-margin;
+@global-margin                    : 15px;
+@global-margin-large              : @global-margin;
+@global-grid-gutter               : @global-margin;
+@global-grid-gutter-large         : @global-margin;
 
 //
 // Controls
 //
 
-@global-height:                                 30px;
-@global-height-mini:                            20px;
-@global-height-small:                           25px;
-@global-height-large:                           40px;
+@global-height                    : 30px;
+@global-height-mini               : 20px;
+@global-height-small              : 25px;
+@global-height-large              : 40px;
 
 //
 // Z-index
 //
 
-@global-z-index:                                1000;
+@global-z-index                   : 1000;
