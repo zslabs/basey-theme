@@ -5,7 +5,7 @@ if ( !defined( 'BASEY_VER' ) ) {
 	define( 'BASEY_VER', $basey_theme_object->version );
 }
 
-$folder = '/inc';
+$folder = '/inc/';
 
 $files = array (
 	'assets',
