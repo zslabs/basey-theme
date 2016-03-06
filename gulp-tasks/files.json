@@ -27,6 +27,7 @@
     "node_modules/uikit/src/js/components/form-password.js",
     "node_modules/uikit/src/js/components/form-select.js",
     "node_modules/uikit/src/js/components/grid.js",
+    "node_modules/uikit/src/js/components/grid-parallax.js",
     "node_modules/uikit/src/js/components/htmleditor.js",
     "node_modules/uikit/src/js/components/lightbox.js",
     "node_modules/uikit/src/js/components/nestable.js",
