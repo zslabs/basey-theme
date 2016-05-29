@@ -19,3 +19,7 @@ Extremely flexible, easy to customize and adheres to WordPress coding standards 
      * Watches for project changes and starts BrowserSync instance
 
 Enjoy!
+
+# Copyright and License
+
+Copyright [Zachary Schnackel](http://zslabs.com) under the [MIT license](LICENSE.md).
