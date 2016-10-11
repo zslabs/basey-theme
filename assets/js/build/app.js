@@ -1,2 +1,1 @@
-!function(e){"use strict";boomsvgloader.load(svgSpritePath),e("[placeholder]").placeholder()}(jQuery);
-//# sourceMappingURL=../sourcemaps/app.js.map
+!function(e){"use strict";boomsvgloader.load(svgSpritePath),e("[placeholder]").placeholder()}(jQuery);null//# sourceMappingURL=../sourcemaps/app.js.mapnull
